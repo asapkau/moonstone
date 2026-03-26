@@ -670,29 +670,45 @@ nav .container {
   position: relative;
 }
 
-.crystals-showcase {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.crystals-marquee-wrapper {
+  overflow: hidden;
   margin-top: 3rem;
+  padding: 1rem 0;
+}
+
+.crystals-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+.crystals-marquee-wrapper:hover .crystals-marquee-track {
+  animation-play-state: paused;
 }
 
 .crystal-card {
+  flex-shrink: 0;
+  width: 320px;
+  margin: 0 1.2rem;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  padding: 2rem 1.5rem;
+  padding: 1.5rem;
   text-align: center;
   border: 1px solid rgba(232, 223, 208, 0.5);
   transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   cursor: pointer;
-  position: relative;
   overflow: hidden;
 }
 
 .crystal-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 50px rgba(44, 36, 55, 0.1);
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 16px 50px rgba(44, 36, 55, 0.12);
   border-color: var(--lavender);
 }
 
@@ -701,12 +717,7 @@ nav .container {
   margin-bottom: 1rem;
   display: block;
   transition: all 0.4s ease;
-  animation: float 6s ease-in-out infinite;
 }
-
-.crystal-card:nth-child(2) .crystal-emoji { animation-delay: -1.5s; }
-.crystal-card:nth-child(3) .crystal-emoji { animation-delay: -3s; }
-.crystal-card:nth-child(4) .crystal-emoji { animation-delay: -4.5s; }
 
 .crystal-card:hover .crystal-emoji { transform: scale(1.15); }
 
@@ -734,6 +745,14 @@ nav .container {
   margin-top: 3.5rem;
 }
 
+@media (max-width: 768px) {
+  .crystal-card { width: 260px; }
+}
+
+@media (max-width: 480px) {
+  .crystal-card { width: 220px; margin: 0 0.8rem; }
+}
+
 /* ─── EVENTS ─── */
 .events {
   padding: 8rem 0;
@@ -750,8 +769,8 @@ nav .container {
 
 .event-card {
   display: grid;
-  grid-template-columns: 120px 1fr auto;
-  gap: 2.5rem;
+  grid-template-columns: 120px 80px 1fr auto;
+  gap: 2rem;
   align-items: center;
   background: var(--warm-white);
   border-radius: 20px;
@@ -759,6 +778,17 @@ nav .container {
   border: 1px solid rgba(232, 223, 208, 0.5);
   transition: all 0.4s ease;
   cursor: pointer;
+}
+
+.event-card.no-image {
+  grid-template-columns: 120px 1fr auto;
+}
+
+.event-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
 }
 
 .event-card:hover {
@@ -1027,7 +1057,6 @@ footer {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .crystals-showcase { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
 }
 
@@ -1056,15 +1085,17 @@ footer {
   .about-circle { width: 250px; height: 250px; }
 
   .services-grid { grid-template-columns: 1fr; }
-  .crystals-showcase { grid-template-columns: repeat(2, 1fr); }
   .testimonials-grid { grid-template-columns: 1fr; }
 
   .event-card {
-    grid-template-columns: 80px 1fr;
-    gap: 1.5rem;
+    grid-template-columns: 80px 60px 1fr;
+    gap: 1rem;
   }
-
-  .event-tag { grid-column: 2; }
+  .event-card.no-image {
+    grid-template-columns: 80px 1fr;
+  }
+  .event-img { width: 60px; height: 60px; }
+  .event-tag { grid-column: -1; }
 
   .hero-title { letter-spacing: 0.04em; }
 
@@ -1074,9 +1105,26 @@ footer {
 }
 
 @media (max-width: 480px) {
-  .crystals-showcase { grid-template-columns: 1fr; }
   .about-values { flex-direction: column; gap: 1.5rem; }
   .hero-buttons { flex-direction: column; align-items: center; }
+}
+
+/* ─── CRYSTAL BRACELET IMAGES ─── */
+.crystal-bracelet-img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  transition: transform 0.5s ease;
+}
+
+.crystal-card:hover .crystal-bracelet-img {
+  transform: scale(1.05);
+}
+
+.crystal-emoji {
+  display: none;
 }
 
 /* ─── CRYSTAL QUIZ ─── */
@@ -1671,12 +1719,14 @@ footer {
       <div class="about-content">
         <h2>Our Story</h2>
         <span class="script">rooted in intention</span>
-        <p>
-          Moonstone was born from a simple truth: healing happens in community. We believe every soul deserves a sanctuary — a place to slow down, reconnect, and rediscover inner peace.
-        </p>
-        <p>
-          Through ethically sourced crystals, intuitive tarot readings, and transformative workshops, we guide individuals and communities toward deeper understanding, authentic connection, and lasting well-being.
-        </p>
+        <div id="our-story">
+          <p>
+            Moonstone was born from a simple truth: healing happens in community. We believe every soul deserves a sanctuary — a place to slow down, reconnect, and rediscover inner peace.
+          </p>
+          <p>
+            Through ethically sourced crystals, intuitive tarot readings, and transformative workshops, we guide individuals and communities toward deeper understanding, authentic connection, and lasting well-being.
+          </p>
+        </div>
         <div class="about-values">
           <div class="about-value">
             <div class="about-value-icon">🌿</div>
@@ -1710,44 +1760,7 @@ footer {
       <h2>Our Offerings</h2>
       <p>Pathways to peace, growth, and deeper connection — crafted with care for every part of your journey.</p>
     </div>
-    <div class="services-grid">
-      <div class="service-card reveal">
-        <div class="service-icon">🔮</div>
-        <h3>Tarot Readings</h3>
-        <p>Intuitive one-on-one sessions to illuminate your path, uncover hidden truths, and bring clarity to life's biggest questions.</p>
-        <span class="service-link">Book a session →</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="service-icon">💎</div>
-        <h3>Crystal Shop</h3>
-        <p>Ethically sourced crystals, gemstones, and healing tools — each hand-selected for their energy and intention.</p>
-        <span class="service-link">Browse crystals →</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="service-icon">🧘</div>
-        <h3>Healing Workshops</h3>
-        <p>Group sessions on energy work, meditation, breathwork, and holistic well-being for all experience levels.</p>
-        <span class="service-link">View schedule →</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="service-icon">🌱</div>
-        <h3>Inclusive Circles</h3>
-        <p>Community gathering spaces built on trust, empathy, and shared storytelling — where every voice matters.</p>
-        <span class="service-link">Join a circle →</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="service-icon">🕊️</div>
-        <h3>Conflict Resolution</h3>
-        <p>Guided workshops on transforming conflict into understanding through compassionate communication and active listening.</p>
-        <span class="service-link">Learn more →</span>
-      </div>
-      <div class="service-card reveal">
-        <div class="service-icon">✦</div>
-        <h3>Leadership Retreats</h3>
-        <p>Immersive programs for conscious leaders — blending inner work with practical skills for community building.</p>
-        <span class="service-link">Explore retreats →</span>
-      </div>
-    </div>
+    <div class="services-grid" id="offerings-container"></div>
   </div>
 </section>
 
@@ -1759,80 +1772,25 @@ footer {
       <h2>The Crystal Collection</h2>
       <p>Each stone carries its own wisdom. Find the one that speaks to your soul.</p>
     </div>
-    <div class="crystals-showcase">
-      <div class="crystal-card reveal">
-        <span class="crystal-emoji">🤍</span>
-        <h4>Moonstone</h4>
-        <p class="crystal-property">New beginnings</p>
-        <p class="crystal-price">From $18</p>
-      </div>
-      <div class="crystal-card reveal">
-        <span class="crystal-emoji">💜</span>
-        <h4>Amethyst</h4>
-        <p class="crystal-property">Inner peace</p>
-        <p class="crystal-price">From $14</p>
-      </div>
-      <div class="crystal-card reveal">
-        <span class="crystal-emoji">💗</span>
-        <h4>Rose Quartz</h4>
-        <p class="crystal-property">Unconditional love</p>
-        <p class="crystal-price">From $12</p>
-      </div>
-      <div class="crystal-card reveal">
-        <span class="crystal-emoji">🖤</span>
-        <h4>Black Tourmaline</h4>
-        <p class="crystal-property">Protection</p>
-        <p class="crystal-price">From $16</p>
-      </div>
-    </div>
-    <div class="crystals-cta">
-      <a href="#" class="btn btn-primary">Shop All Crystals</a>
-    </div>
   </div>
+  <div class="crystals-marquee-wrapper">
+      <div class="crystals-marquee-track" id="crystalTrack">
+        <!-- Dynamically populated from Firestore -->
+      </div>
+    </div>
+
 </section>
 
 <!-- ─── EVENTS ─── -->
 <section class="events" id="events">
   <div class="container">
     <div class="section-header reveal">
-      <span class="script">gather, grow, transform</span>
+      <span class="script">gather &amp; grow</span>
       <h2>Upcoming Events</h2>
-      <p>Spaces where strangers become community and growth becomes collective.</p>
+      <p>Join us for workshops, healing circles, and retreats designed to nourish your soul.</p>
     </div>
-    <div class="events-list">
-      <div class="event-card reveal">
-        <div class="event-date">
-          <p class="event-date-month">Mar</p>
-          <p class="event-date-day">22</p>
-        </div>
-        <div class="event-info">
-          <h3>New Moon Healing Circle</h3>
-          <p>A guided meditation and intention-setting ceremony for the lunar cycle.</p>
-        </div>
-        <span class="event-tag tag-circle">Circle</span>
-      </div>
-      <div class="event-card reveal">
-        <div class="event-date">
-          <p class="event-date-month">Apr</p>
-          <p class="event-date-day">05</p>
-        </div>
-        <div class="event-info">
-          <h3>Conflict to Connection Workshop</h3>
-          <p>Learn compassionate communication tools for navigating disagreements with grace.</p>
-        </div>
-        <span class="event-tag tag-workshop">Workshop</span>
-      </div>
-      <div class="event-card reveal">
-        <div class="event-date">
-          <p class="event-date-month">Apr</p>
-          <p class="event-date-day">18</p>
-        </div>
-        <div class="event-info">
-          <h3>Spring Equinox Leadership Retreat</h3>
-          <p>A weekend of reflection, growth, and conscious leadership in nature.</p>
-        </div>
-        <span class="event-tag tag-retreat">Retreat</span>
-      </div>
+    <div class="events-list" id="eventsList">
+      <!-- Dynamically populated from Firestore -->
     </div>
   </div>
 </section>
@@ -1919,6 +1877,7 @@ footer {
     <div class="footer-bottom">
       <p>© 2026 Moonstone. All rights reserved.</p>
       <p style="font-size:0.72rem;opacity:0.4;margin-top:0.3rem;">Moonstone is a trading name of Bloom & Belong</p>
+      <a href="/admin.html" style="font-size:0.72rem;opacity:0.35;margin-top:0.3rem;color:var(--lavender-light);text-decoration:none;">Admin</a>
       <div class="footer-social">
         <a href="#">Instagram</a>
         <a href="#">TikTok</a>
@@ -2674,7 +2633,11 @@ function renderResultScreen() {
 window.addEventListener('load', () => {
   setTimeout(openQuiz, 2500);
 });
+
 </script>
+
+<!-- ─── Firebase (modular SDK v10+) ─── -->
+<script type="module" src="/js/frontend-firebase.js"></script>
 
 </body>
 </html>

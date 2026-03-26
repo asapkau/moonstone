@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moonstone — Admin Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Quattrocento+Sans:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --sand: #E8DFD0;
+  --sage: #9CAF93;
+  --sage-deep: #6B8F60;
+  --lavender: #B8A9C9;
+  --lavender-light: #D4C8E2;
+  --moonlight: #E8E0F0;
+  --rose-mist: #D4B5B0;
+  --dusk: #2C2437;
+  --twilight: #4A3F5C;
+  --warm-white: #FDFBF7;
+  --gold-soft: #C9A96E;
+  --danger: #c0392b;
+  --danger-light: rgba(192, 57, 43, 0.08);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Quattrocento Sans', sans-serif;
+  background: linear-gradient(145deg, #FDF6F0 0%, #F5E6DC 30%, #EDDFDA 60%, #F0E4DF 100%);
+  background-attachment: fixed;
+  color: var(--dusk);
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(228, 183, 160, 0.25) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: -15%;
+  left: -10%;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(212, 181, 176, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+h1, h2, h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+}
+
+/* ─── Login Screen ─── */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #FAE8DF 0%, #F0D1C4 35%, #E8C4B8 55%, #DEB8A8 75%, #F2D9CE 100%);
+}
+
+.login-box {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 3rem 2.5rem;
+  border-radius: 24px;
+  border: 1px solid rgba(232, 223, 208, 0.6);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(44, 36, 55, 0.08);
+}
+
+.login-box h1 { font-size: 2.4rem; margin-bottom: 0.3rem; }
+
+.login-box .subtitle {
+  font-family: 'Satisfy', cursive;
+  color: var(--sage-deep);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  background: var(--cream);
+  color: var(--dusk);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.login-box input:focus { border-color: var(--lavender); }
+
+.login-error {
+  color: var(--danger);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.btn-primary { background: var(--dusk); color: var(--warm-white); }
+.btn-primary:hover { background: var(--twilight); }
+
+.btn-sage { background: var(--sage); color: white; }
+.btn-sage:hover { background: var(--sage-deep); }
+
+.btn-small { padding: 0.4rem 1rem; font-size: 0.8rem; }
+
+.btn-edit { background: rgba(184, 169, 201, 0.15); color: var(--twilight); }
+.btn-edit:hover { background: rgba(184, 169, 201, 0.3); }
+
+.btn-delete { background: var(--danger-light); color: var(--danger); }
+.btn-delete:hover { background: rgba(192, 57, 43, 0.15); }
+
+.btn-ghost { background: transparent; border: 1px solid var(--sand); color: var(--twilight); }
+.btn-ghost:hover { border-color: var(--lavender); }
+
+/* ─── Dashboard Layout ─── */
+.dashboard { display: none; position: relative; z-index: 1; }
+
+.dash-header {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--sand);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.dash-header h1 { font-size: 1.6rem; }
+
+.dash-header-right { display: flex; align-items: center; gap: 1rem; }
+.dash-user { font-size: 0.85rem; color: var(--twilight); }
+
+.dash-body { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+/* ─── Tabs ─── */
+.tabs { display: flex; gap: 0; margin-bottom: 2rem; border-bottom: 2px solid var(--sand); }
+
+.tab-btn {
+  padding: 0.8rem 2rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--twilight);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tab-btn.active { color: var(--dusk); border-bottom-color: var(--lavender); }
+.tab-btn:hover { color: var(--dusk); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* ─── Section Header ─── */
+.section-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+.section-top h2 { font-size: 1.5rem; }
+
+/* ─── Form ─── */
+.form-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 36, 55, 0.4);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.form-overlay.open { display: flex; }
+
+.form-modal {
+  background: var(--warm-white);
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(44, 36, 55, 0.15);
+}
+
+.form-modal h2 { font-size: 1.6rem; margin-bottom: 1.5rem; }
+
+.form-group { margin-bottom: 1.2rem; }
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  margin-bottom: 0.4rem;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--cream);
+  color: var(--dusk);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus { border-color: var(--lavender); }
+
+.form-group textarea { resize: vertical; min-height: 80px; }
+
+.form-actions { display: flex; gap: 0.8rem; justify-content: flex-end; margin-top: 1.5rem; }
+
+.img-preview {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--sand);
+  margin-top: 0.5rem;
+}
+
+/* ─── Table/List ─── */
+.item-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  background: var(--warm-white);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  transition: box-shadow 0.3s;
+}
+
+.item-row:hover { box-shadow: 0 4px 16px rgba(44, 36, 55, 0.05); }
+
+.item-row img { width: 60px; height: 60px; object-fit: cover; border-radius: 10px; flex-shrink: 0; }
+
+.item-details { flex: 1; min-width: 0; }
+.item-details h3 { font-size: 1.1rem; font-weight: 400; }
+.item-details p { font-size: 0.85rem; color: var(--twilight); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-meta { font-size: 0.78rem; color: var(--sage-deep); font-family: 'Satisfy', cursive; }
+.item-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+.empty-state { text-align: center; padding: 3rem 1rem; color: var(--twilight); opacity: 0.6; }
+.empty-state p { font-family: 'Satisfy', cursive; font-size: 1.1rem; }
+
+/* ─── Loading ─── */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--sand);
+  border-top-color: var(--lavender);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Content Editor ─── */
+.content-section {
+  background: var(--warm-white);
+  border-radius: 16px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.offerings-editor { display: flex; flex-direction: column; gap: 1.2rem; }
+
+.offering-card {
+  background: var(--warm-white);
+  border-radius: 16px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  padding: 1.5rem;
+}
+
+.offering-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: var(--twilight);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+}
+
+.array-list { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; }
+
+.array-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.array-item input { flex: 1; }
+
+.array-item .btn-delete { padding: 0.4rem 0.6rem; font-size: 0.75rem; border-radius: 8px; }
+
+.save-status {
+  font-size: 0.85rem;
+  color: var(--sage-deep);
+  margin-left: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.save-status.show { opacity: 1; }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .dash-body { padding: 1rem; }
+  .form-modal { padding: 1.5rem; margin: 1rem; }
+  .item-row { flex-wrap: wrap; }
+  .item-actions { width: 100%; justify-content: flex-end; }
+  .tab-btn { padding: 0.6rem 1.2rem; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── LOGIN SCREEN ─── -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>Moonstone</h1>
+    <p class="subtitle">admin dashboard</p>
+    <div class="login-error" id="loginError"></div>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email" />
+      <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password" />
+      <button type="submit" class="btn btn-primary" style="width:100%;">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<!-- ─── DASHBOARD ─── -->
+<div class="dashboard" id="dashboard">
+  <header class="dash-header">
+    <h1>Moonstone</h1>
+    <div class="dash-header-right">
+      <span class="dash-user" id="dashUser"></span>
+      <button class="btn btn-ghost btn-small" id="signOutBtn">Sign Out</button>
+    </div>
+  </header>
+
+  <div class="dash-body">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="products">Products</button>
+      <button class="tab-btn" data-tab="events">Events</button>
+      <button class="tab-btn" data-tab="content">Content</button>
+    </div>
+
+    <!-- Products Tab -->
+    <div class="tab-panel active" id="tab-products">
+      <div class="section-top">
+        <h2>Products</h2>
+        <button class="btn btn-sage" id="addProductBtn">+ Add Product</button>
+      </div>
+      <div class="item-list" id="productList">
+        <div class="empty-state"><p>Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Events Tab -->
+    <div class="tab-panel" id="tab-events">
+      <div class="section-top">
+        <h2>Events</h2>
+        <button class="btn btn-sage" id="addEventBtn">+ Add Event</button>
+      </div>
+      <div class="item-list" id="eventList">
+        <div class="empty-state"><p>Loading...</p></div>
+      </div>
+    </div>
+
+    <!-- Content Tab -->
+    <div class="tab-panel" id="tab-content">
+
+      <!-- Our Story -->
+      <div class="section-top">
+        <h2>Our Story</h2>
+      </div>
+      <div class="content-section">
+        <div class="form-group">
+          <label>Story Text</label>
+          <textarea id="ourStoryText" rows="6" placeholder="Write the Our Story text..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Story Image</label>
+          <input type="file" id="ourStoryImageInput" accept="image/*" />
+          <img id="ourStoryImagePreview" class="img-preview" style="display:none;" />
+        </div>
+        <div class="form-actions" style="justify-content:flex-start;">
+          <button class="btn btn-primary" id="saveStoryBtn">Save Our Story</button>
+          <span class="save-status" id="storyStatus"></span>
+        </div>
+      </div>
+
+      <!-- Offerings -->
+      <div class="section-top" style="margin-top:3rem;">
+        <h2>Offerings</h2>
+      </div>
+      <div id="offeringsEditor" class="offerings-editor"></div>
+      <div class="form-actions" style="justify-content:flex-start;margin-top:1.5rem;">
+        <button class="btn btn-primary" id="saveOfferingsBtn">Save All Offerings</button>
+        <span class="save-status" id="offeringsStatus"></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ─── PRODUCT FORM MODAL ─── -->
+<div class="form-overlay" id="productFormOverlay">
+  <div class="form-modal">
+    <h2 id="productFormTitle">Add Product</h2>
+    <form id="productForm">
+      <input type="hidden" id="productId" />
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="productName" required placeholder="e.g. Amethyst Bracelet" />
+      </div>
+      <div class="form-group">
+        <label>Price (£)</label>
+        <input type="number" id="productPrice" required placeholder="28" min="0" step="1" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="productDescription" required placeholder="A brief description..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Image</label>
+        <input type="file" id="productImage" accept="image/*" />
+        <img id="productImagePreview" class="img-preview" style="display:none;" />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" id="cancelProductBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="productSubmitBtn">Save Product</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ─── EVENT FORM MODAL ─── -->
+<div class="form-overlay" id="eventFormOverlay">
+  <div class="form-modal">
+    <h2 id="eventFormTitle">Add Event</h2>
+    <form id="eventForm">
+      <input type="hidden" id="eventId" />
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="eventTitle" required placeholder="e.g. Full Moon Sound Bath" />
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" id="eventDate" required />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="eventDescription" required placeholder="A brief description of the event..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Image</label>
+        <input type="file" id="eventImage" accept="image/*" />
+        <img id="eventImagePreview" class="img-preview" style="display:none;" />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn btn-ghost" id="cancelEventBtn">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="eventSubmitBtn">Save Event</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ─── Firebase Modular SDK v10+ ─── -->
+<script type="module">
+import { db, auth, storage } from "/js/firebase-config.js";
+import {
+  collection,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  onSnapshot
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import {
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut as firebaseSignOut
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-storage.js";
+
+// ─── DOM refs ───
+const loginScreen = document.getElementById('loginScreen');
+const dashboard = document.getElementById('dashboard');
+const loginForm = document.getElementById('loginForm');
+const loginError = document.getElementById('loginError');
+
+// ─── Auth ───
+onAuthStateChanged(auth, user => {
+  if (user) {
+    loginScreen.style.display = 'none';
+    dashboard.style.display = 'block';
+    document.getElementById('dashUser').textContent = user.email;
+    initListeners();
+  } else {
+    loginScreen.style.display = 'flex';
+    dashboard.style.display = 'none';
+  }
+});
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  loginError.style.display = 'none';
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    loginError.textContent = 'Invalid email or password.';
+    loginError.style.display = 'block';
+  }
+});
+
+document.getElementById('signOutBtn').addEventListener('click', () => {
+  firebaseSignOut(auth);
+});
+
+// ─── Tabs ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── Real-time Listeners ───
+let productUnsub = null;
+let eventUnsub = null;
+let contentLoaded = false;
+
+function initListeners() {
+  if (productUnsub) productUnsub();
+  if (eventUnsub) eventUnsub();
+
+  // Load content editor data
+  if (!contentLoaded) {
+    contentLoaded = true;
+    loadContent();
+  }
+
+  // Products listener
+  productUnsub = onSnapshot(collection(db, "products"), (snapshot) => {
+    const list = document.getElementById('productList');
+    if (snapshot.empty) {
+      list.innerHTML = '<div class="empty-state"><p>No products yet</p></div>';
+      return;
+    }
+    list.innerHTML = '';
+    snapshot.forEach(docSnap => {
+      const p = docSnap.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        <img src="${esc(p.imageUrl || '')}" alt="${esc(p.name)}" onerror="this.style.display='none'" />
+        <div class="item-details">
+          <h3>${esc(p.name)}</h3>
+          <p>${esc(p.description)}</p>
+          <p class="item-meta">£${p.price || 0}</p>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-edit btn-small" data-edit-product="${docSnap.id}">Edit</button>
+          <button class="btn btn-delete btn-small" data-delete-product="${docSnap.id}" data-name="${esc(p.name)}">Delete</button>
+        </div>`;
+      list.appendChild(row);
+    });
+
+    // Attach event handlers
+    list.querySelectorAll('[data-edit-product]').forEach(btn => {
+      btn.addEventListener('click', () => editProduct(btn.dataset.editProduct));
+    });
+    list.querySelectorAll('[data-delete-product]').forEach(btn => {
+      btn.addEventListener('click', () => deleteProduct(btn.dataset.deleteProduct, btn.dataset.name));
+    });
+  });
+
+  // Events listener
+  eventUnsub = onSnapshot(collection(db, "events"), (snapshot) => {
+    const list = document.getElementById('eventList');
+    if (snapshot.empty) {
+      list.innerHTML = '<div class="empty-state"><p>No events yet</p></div>';
+      return;
+    }
+    list.innerHTML = '';
+    snapshot.forEach(docSnap => {
+      const e = docSnap.data();
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      row.innerHTML = `
+        ${e.imageUrl ? `<img src="${esc(e.imageUrl)}" alt="${esc(e.title)}" onerror="this.style.display='none'" />` : ''}
+        <div class="item-details">
+          <h3>${esc(e.title)}</h3>
+          <p>${esc(e.description)}</p>
+          <p class="item-meta">${esc(e.date)}</p>
+        </div>
+        <div class="item-actions">
+          <button class="btn btn-edit btn-small" data-edit-event="${docSnap.id}">Edit</button>
+          <button class="btn btn-delete btn-small" data-delete-event="${docSnap.id}" data-name="${esc(e.title)}">Delete</button>
+        </div>`;
+      list.appendChild(row);
+    });
+
+    list.querySelectorAll('[data-edit-event]').forEach(btn => {
+      btn.addEventListener('click', () => editEvent(btn.dataset.editEvent));
+    });
+    list.querySelectorAll('[data-delete-event]').forEach(btn => {
+      btn.addEventListener('click', () => deleteEvent(btn.dataset.deleteEvent, btn.dataset.name));
+    });
+  });
+}
+
+// ─── Product CRUD ───
+const productFormOverlay = document.getElementById('productFormOverlay');
+
+document.getElementById('addProductBtn').addEventListener('click', () => openProductForm());
+document.getElementById('cancelProductBtn').addEventListener('click', () => closeProductForm());
+productFormOverlay.addEventListener('click', (e) => { if (e.target === productFormOverlay) closeProductForm(); });
+
+function openProductForm(data) {
+  document.getElementById('productFormTitle').textContent = data ? 'Edit Product' : 'Add Product';
+  document.getElementById('productSubmitBtn').textContent = data ? 'Update Product' : 'Save Product';
+  document.getElementById('productId').value = data ? data.id : '';
+  document.getElementById('productName').value = data ? data.name : '';
+  document.getElementById('productPrice').value = data ? data.price : '';
+  document.getElementById('productDescription').value = data ? data.description : '';
+  document.getElementById('productImage').value = '';
+
+  const preview = document.getElementById('productImagePreview');
+  if (data && data.imageUrl) {
+    preview.src = data.imageUrl;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+
+  productFormOverlay.classList.add('open');
+}
+
+function closeProductForm() {
+  productFormOverlay.classList.remove('open');
+}
+
+document.getElementById('productForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('productSubmitBtn');
+  const origText = btn.textContent;
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const id = document.getElementById('productId').value;
+    const fileInput = document.getElementById('productImage');
+    let imageUrl = null;
+
+    // Upload image if a new file was selected
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, 'products/' + Date.now() + '_' + file.name);
+      const snap = await uploadBytes(storageRef, file);
+      imageUrl = await getDownloadURL(snap.ref);
+    }
+
+    const data = {
+      name: document.getElementById('productName').value.trim(),
+      price: parseInt(document.getElementById('productPrice').value) || 0,
+      description: document.getElementById('productDescription').value.trim()
+    };
+
+    if (imageUrl) data.imageUrl = imageUrl;
+
+    if (id) {
+      await updateDoc(doc(db, "products", id), data);
+    } else {
+      if (!imageUrl) {
+        alert('Please select an image for the new product.');
+        btn.textContent = origText;
+        btn.disabled = false;
+        return;
+      }
+      await addDoc(collection(db, "products"), data);
+    }
+
+    closeProductForm();
+  } catch (err) {
+    console.error('Save product error:', err);
+    alert('Error saving product: ' + err.message);
+  }
+
+  btn.textContent = origText;
+  btn.disabled = false;
+});
+
+async function editProduct(id) {
+  const snapshot = await getDocs(collection(db, "products"));
+  snapshot.forEach(docSnap => {
+    if (docSnap.id === id) {
+      openProductForm({ id, ...docSnap.data() });
+    }
+  });
+}
+
+async function deleteProduct(id, name) {
+  if (!confirm('Delete "' + name + '"? This cannot be undone.')) return;
+  try {
+    await deleteDoc(doc(db, "products", id));
+  } catch (err) {
+    alert('Error deleting product: ' + err.message);
+  }
+}
+
+// ─── Event CRUD ───
+const eventFormOverlay = document.getElementById('eventFormOverlay');
+
+document.getElementById('addEventBtn').addEventListener('click', () => openEventForm());
+document.getElementById('cancelEventBtn').addEventListener('click', () => closeEventForm());
+eventFormOverlay.addEventListener('click', (e) => { if (e.target === eventFormOverlay) closeEventForm(); });
+
+function openEventForm(data) {
+  document.getElementById('eventFormTitle').textContent = data ? 'Edit Event' : 'Add Event';
+  document.getElementById('eventSubmitBtn').textContent = data ? 'Update Event' : 'Save Event';
+  document.getElementById('eventId').value = data ? data.id : '';
+  document.getElementById('eventTitle').value = data ? data.title : '';
+  document.getElementById('eventDescription').value = data ? data.description : '';
+  document.getElementById('eventDate').value = data ? data.date : '';
+  document.getElementById('eventImage').value = '';
+
+  const preview = document.getElementById('eventImagePreview');
+  if (data && data.imageUrl) {
+    preview.src = data.imageUrl;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+
+  eventFormOverlay.classList.add('open');
+}
+
+function closeEventForm() {
+  eventFormOverlay.classList.remove('open');
+}
+
+document.getElementById('eventForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('eventSubmitBtn');
+  const origText = btn.textContent;
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const id = document.getElementById('eventId').value;
+    const fileInput = document.getElementById('eventImage');
+    let imageUrl = null;
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, 'events/' + Date.now() + '_' + file.name);
+      const snap = await uploadBytes(storageRef, file);
+      imageUrl = await getDownloadURL(snap.ref);
+    }
+
+    const data = {
+      title: document.getElementById('eventTitle').value.trim(),
+      description: document.getElementById('eventDescription').value.trim(),
+      date: document.getElementById('eventDate').value
+    };
+
+    if (imageUrl) data.imageUrl = imageUrl;
+
+    if (id) {
+      await updateDoc(doc(db, "events", id), data);
+    } else {
+      await addDoc(collection(db, "events"), data);
+    }
+
+    closeEventForm();
+  } catch (err) {
+    console.error('Save event error:', err);
+    alert('Error saving event: ' + err.message);
+  }
+
+  btn.textContent = origText;
+  btn.disabled = false;
+});
+
+async function editEvent(id) {
+  const snapshot = await getDocs(collection(db, "events"));
+  snapshot.forEach(docSnap => {
+    if (docSnap.id === id) {
+      openEventForm({ id, ...docSnap.data() });
+    }
+  });
+}
+
+async function deleteEvent(id, title) {
+  if (!confirm('Delete "' + title + '"? This cannot be undone.')) return;
+  try {
+    await deleteDoc(doc(db, "events", id));
+  } catch (err) {
+    alert('Error deleting event: ' + err.message);
+  }
+}
+
+// ─── Content Management ───
+const contentDocRef = doc(db, "content", "main");
+let currentStoryImageUrl = '';
+
+// Load content when Content tab is first opened
+async function loadContent() {
+  try {
+    const snap = await getDoc(contentDocRef);
+    if (!snap.exists()) return;
+    const data = snap.data();
+
+    // Our Story
+    document.getElementById('ourStoryText').value = data.ourStory || '';
+    const preview = document.getElementById('ourStoryImagePreview');
+    if (data.ourStoryImage) {
+      currentStoryImageUrl = data.ourStoryImage;
+      preview.src = data.ourStoryImage;
+      preview.style.display = 'block';
+    }
+
+    // Offerings
+    renderOfferingsEditor(data.offerings || []);
+  } catch (err) {
+    console.error('Failed to load content:', err);
+  }
+}
+
+// Image preview on file select
+document.getElementById('ourStoryImageInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  const preview = document.getElementById('ourStoryImagePreview');
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  }
+});
+
+// Save Our Story
+document.getElementById('saveStoryBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveStoryBtn');
+  const status = document.getElementById('storyStatus');
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const fileInput = document.getElementById('ourStoryImageInput');
+    let imageUrl = currentStoryImageUrl;
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, 'content/' + Date.now() + '_' + file.name);
+      const snap = await uploadBytes(storageRef, file);
+      imageUrl = await getDownloadURL(snap.ref);
+      currentStoryImageUrl = imageUrl;
+    }
+
+    const updateData = {
+      ourStory: document.getElementById('ourStoryText').value.trim()
+    };
+    if (imageUrl) updateData.ourStoryImage = imageUrl;
+
+    await updateDoc(contentDocRef, updateData);
+
+    status.textContent = 'Saved!';
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2000);
+  } catch (err) {
+    console.error('Save story error:', err);
+    alert('Error saving: ' + err.message);
+  }
+
+  btn.textContent = 'Save Our Story';
+  btn.disabled = false;
+});
+
+// ─── Offerings Editor ───
+function renderOfferingsEditor(offerings) {
+  const container = document.getElementById('offeringsEditor');
+  container.innerHTML = '';
+
+  // Always render exactly 4
+  for (let i = 0; i < 4; i++) {
+    const o = offerings[i] || { title: '', description: '', examples: [], pricing: [] };
+    const card = document.createElement('div');
+    card.className = 'offering-card';
+    card.dataset.index = i;
+
+    card.innerHTML = `
+      <h3>Offering ${i + 1}</h3>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" class="off-title" value="${esc(o.title)}" placeholder="Offering title" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="off-desc" rows="4" placeholder="Full description...">${esc(o.description)}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Examples</label>
+        <div class="array-list off-examples"></div>
+        <button class="btn btn-ghost btn-small add-example-btn" type="button">+ Add Example</button>
+      </div>
+      <div class="form-group">
+        <label>Pricing</label>
+        <div class="array-list off-pricing"></div>
+        <button class="btn btn-ghost btn-small add-pricing-btn" type="button">+ Add Pricing</button>
+      </div>`;
+
+    container.appendChild(card);
+
+    // Populate arrays
+    const exList = card.querySelector('.off-examples');
+    (o.examples || []).forEach(ex => addArrayItem(exList, ex));
+
+    const prList = card.querySelector('.off-pricing');
+    (o.pricing || []).forEach(pr => addArrayItem(prList, pr));
+
+    // Add buttons
+    card.querySelector('.add-example-btn').addEventListener('click', () => {
+      addArrayItem(card.querySelector('.off-examples'), '');
+    });
+    card.querySelector('.add-pricing-btn').addEventListener('click', () => {
+      addArrayItem(card.querySelector('.off-pricing'), '');
+    });
+  }
+}
+
+function addArrayItem(listEl, value) {
+  const item = document.createElement('div');
+  item.className = 'array-item';
+  item.innerHTML = `
+    <input type="text" value="${esc(value)}" placeholder="Enter value..." />
+    <button class="btn btn-delete btn-small" type="button">×</button>`;
+  item.querySelector('.btn-delete').addEventListener('click', () => item.remove());
+  listEl.appendChild(item);
+}
+
+// Save All Offerings
+document.getElementById('saveOfferingsBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveOfferingsBtn');
+  const status = document.getElementById('offeringsStatus');
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const cards = document.querySelectorAll('.offering-card');
+    const offerings = [];
+
+    cards.forEach(card => {
+      const title = card.querySelector('.off-title').value.trim();
+      const description = card.querySelector('.off-desc').value.trim();
+
+      const examples = [];
+      card.querySelectorAll('.off-examples .array-item input').forEach(inp => {
+        const v = inp.value.trim();
+        if (v) examples.push(v);
+      });
+
+      const pricing = [];
+      card.querySelectorAll('.off-pricing .array-item input').forEach(inp => {
+        const v = inp.value.trim();
+        if (v) pricing.push(v);
+      });
+
+      offerings.push({ title, description, examples, pricing });
+    });
+
+    await updateDoc(contentDocRef, { offerings });
+
+    status.textContent = 'Saved!';
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2000);
+  } catch (err) {
+    console.error('Save offerings error:', err);
+    alert('Error saving offerings: ' + err.message);
+  }
+
+  btn.textContent = 'Save All Offerings';
+  btn.disabled = false;
+});
+
+// ─── Utility ───
+function esc(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+</script>
+
+</body>
+</html>

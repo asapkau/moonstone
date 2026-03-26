@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offering — Moonstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quattrocento+Sans:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+<style>
+/* ─── CSS Variables ─── */
+:root {
+  --cream: #F5F0E8;
+  --sand: #E8DFD0;
+  --sage: #9CAF93;
+  --sage-deep: #6B8F60;
+  --lavender: #B8A9C9;
+  --lavender-light: #D4C8E2;
+  --moonlight: #E8E0F0;
+  --rose-mist: #D4B5B0;
+  --dusk: #2C2437;
+  --twilight: #4A3F5C;
+  --warm-white: #FDFBF7;
+  --gold-soft: #C9A96E;
+  --water: #A8C4C0;
+  --water-deep: #7BA39E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Quattrocento Sans', sans-serif;
+  background: var(--cream);
+  color: var(--dusk);
+  line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.script { font-family: 'Satisfy', cursive; }
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.4s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Nav ─── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.2rem 0;
+  background: rgba(245, 240, 232, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 30px rgba(44, 36, 55, 0.06);
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  color: var(--dusk);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lavender-light), var(--moonlight), var(--warm-white));
+  animation: breathe 4s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(184, 169, 201, 0.4);
+}
+
+.nav-back {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  transition: color 0.3s ease;
+}
+
+.nav-back:hover { color: var(--sage-deep); }
+
+/* ─── Offering Detail ─── */
+.offering-hero {
+  padding: 10rem 0 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.offering-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--lavender), transparent);
+}
+
+.offering-hero .script {
+  color: var(--sage);
+  font-size: 1.3rem;
+  display: block;
+  margin-bottom: 0.8rem;
+  animation: fadeUp 0.6s ease both;
+}
+
+.offering-hero h1 {
+  font-size: 3.5rem;
+  color: var(--dusk);
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.offering-hero .offering-intro {
+  max-width: 600px;
+  margin: 0 auto;
+  color: var(--twilight);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+.offering-body {
+  padding: 4rem 0 6rem;
+}
+
+.offering-content {
+  max-width: 780px;
+  margin: 0 auto;
+  display: grid;
+  gap: 3.5rem;
+}
+
+/* Description */
+.offering-description {
+  animation: fadeUp 0.6s ease 0.3s both;
+}
+
+.offering-description p {
+  color: var(--twilight);
+  font-size: 1rem;
+  line-height: 2;
+  margin-bottom: 1rem;
+}
+
+/* Examples */
+.offering-examples-section {
+  background: var(--warm-white);
+  border-radius: 24px;
+  padding: 2.8rem 3rem;
+  border: 1px solid rgba(232, 223, 208, 0.6);
+  animation: fadeUp 0.6s ease 0.4s both;
+}
+
+.offering-examples-section h3 {
+  font-size: 1.6rem;
+  color: var(--dusk);
+  margin-bottom: 1.5rem;
+}
+
+.offering-examples-list {
+  list-style: none;
+  display: grid;
+  gap: 1rem;
+}
+
+.offering-examples-list li {
+  padding: 0.8rem 0;
+  padding-left: 1.6rem;
+  position: relative;
+  color: var(--twilight);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(232, 223, 208, 0.4);
+}
+
+.offering-examples-list li:last-child { border-bottom: none; }
+
+.offering-examples-list li::before {
+  content: '~';
+  position: absolute;
+  left: 0;
+  color: var(--lavender);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+}
+
+/* Pricing */
+.offering-pricing-section {
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.offering-pricing-section h3 {
+  font-size: 1.6rem;
+  color: var(--dusk);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pricing-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.pricing-item {
+  background: var(--warm-white);
+  border: 1px solid rgba(232, 223, 208, 0.6);
+  border-radius: 16px;
+  padding: 1.4rem 2rem;
+  text-align: center;
+  color: var(--dusk);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  transition: all 0.3s ease;
+}
+
+.pricing-item:hover {
+  border-color: var(--lavender-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(44, 36, 55, 0.06);
+}
+
+/* Back link */
+.offering-back {
+  text-align: center;
+  padding: 2rem 0 0;
+  animation: fadeUp 0.6s ease 0.6s both;
+}
+
+.offering-back a {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: gap 0.3s ease, color 0.3s ease;
+}
+
+.offering-back a:hover {
+  gap: 0.8rem;
+  color: var(--dusk);
+}
+
+/* ─── Footer ─── */
+footer {
+  padding: 5rem 0 2.5rem;
+  background: var(--dusk);
+  color: rgba(245, 240, 232, 0.6);
+  border-top: 1px solid rgba(245, 240, 232, 0.06);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.footer-brand .logo { color: var(--cream); margin-bottom: 1rem; }
+.footer-brand .logo-icon { background: linear-gradient(135deg, var(--lavender), var(--moonlight)); }
+.footer-brand p { font-size: 0.9rem; line-height: 1.8; max-width: 280px; }
+
+.footer-col h4 {
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 0.8rem; }
+.footer-col ul a { font-size: 0.88rem; color: rgba(245, 240, 232, 0.5); transition: color 0.3s ease; }
+.footer-col ul a:hover { color: var(--lavender-light); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(245, 240, 232, 0.08);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.footer-social { display: flex; gap: 1.5rem; }
+.footer-social a { color: rgba(245, 240, 232, 0.4); font-size: 0.82rem; letter-spacing: 0.1em; }
+.footer-social a:hover { color: var(--lavender-light); }
+
+/* ─── Loading State ─── */
+.offering-loading {
+  text-align: center;
+  padding: 12rem 0;
+  color: var(--twilight);
+  opacity: 0.6;
+}
+
+.offering-loading .script {
+  font-size: 1.3rem;
+  color: var(--sage);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+  .offering-hero h1 { font-size: 2.5rem; }
+  .offering-examples-section { padding: 2rem 1.8rem; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="container">
+    <a href="/" class="logo">
+      <div class="logo-icon"></div>
+      MOONSTONE
+    </a>
+    <a href="/#services" class="nav-back">← Back to offerings</a>
+  </div>
+</nav>
+
+<!-- ─── CONTENT (populated by JS) ─── -->
+<main id="offering-main">
+  <div class="offering-loading">
+    <span class="script">loading...</span>
+  </div>
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <div class="logo-icon"></div>
+          MOONSTONE
+        </a>
+        <p>A sacred space for wellness, healing, and the kind of community that changes everything.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="/#about">Our Story</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/#crystals">Crystal Shop</a></li>
+          <li><a href="/#events">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Offerings</h4>
+        <ul>
+          <li><a href="/offering.html?id=0">Offering 1</a></li>
+          <li><a href="/offering.html?id=1">Offering 2</a></li>
+          <li><a href="/offering.html?id=2">Offering 3</a></li>
+          <li><a href="/offering.html?id=3">Offering 4</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Gift Cards</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Moonstone. All rights reserved.</p>
+      <p style="font-size:0.72rem;opacity:0.4;margin-top:0.3rem;">Moonstone is a trading name of Bloom & Belong</p>
+      <div class="footer-social">
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Pinterest</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+import { db } from "./js/firebase-config.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
+function esc(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+async function loadOffering() {
+  const main = document.getElementById('offering-main');
+  const params = new URLSearchParams(window.location.search);
+  const id = parseInt(params.get('id'), 10);
+
+  if (isNaN(id)) {
+    main.innerHTML = '<div class="offering-loading"><span class="script">Offering not found</span></div>';
+    return;
+  }
+
+  try {
+    const snap = await getDoc(doc(db, "content", "main"));
+    if (!snap.exists()) {
+      main.innerHTML = '<div class="offering-loading"><span class="script">Content not available</span></div>';
+      return;
+    }
+
+    const { offerings } = snap.data();
+    if (!offerings || !offerings[id]) {
+      main.innerHTML = '<div class="offering-loading"><span class="script">Offering not found</span></div>';
+      return;
+    }
+
+    const o = offerings[id];
+    document.title = `${o.title} — Moonstone`;
+
+    // Build description paragraphs
+    const descParagraphs = o.description
+      ? o.description.split(/\n\s*\n/).filter(Boolean).map(p => `<p>${esc(p.trim())}</p>`).join('')
+      : '';
+
+    // Build examples section
+    let examplesHTML = '';
+    if (o.examples && o.examples.length) {
+      examplesHTML = `
+        <div class="offering-examples-section">
+          <h3>What This Includes</h3>
+          <ul class="offering-examples-list">
+            ${o.examples.map(ex => `<li>${esc(ex)}</li>`).join('')}
+          </ul>
+        </div>`;
+    }
+
+    // Build pricing section
+    let pricingHTML = '';
+    if (o.pricing && o.pricing.length) {
+      pricingHTML = `
+        <div class="offering-pricing-section">
+          <h3>Pricing</h3>
+          <div class="pricing-grid">
+            ${o.pricing.map(p => `<div class="pricing-item">${esc(p)}</div>`).join('')}
+          </div>
+        </div>`;
+    }
+
+    // First sentence as intro
+    const firstSentence = o.description ? o.description.split(/(?<=[.!?])\s+/)[0] : '';
+
+    main.innerHTML = `
+      <section class="offering-hero">
+        <div class="container">
+          <span class="script">our offerings</span>
+          <h1>${esc(o.title)}</h1>
+          <p class="offering-intro">${esc(firstSentence)}</p>
+        </div>
+      </section>
+      <section class="offering-body">
+        <div class="container">
+          <div class="offering-content">
+            <div class="offering-description">
+              ${descParagraphs}
+            </div>
+            ${examplesHTML}
+            ${pricingHTML}
+            <div class="offering-back">
+              <a href="/#services">← Back to all offerings</a>
+            </div>
+          </div>
+        </div>
+      </section>`;
+  } catch (err) {
+    console.error('Failed to load offering:', err);
+    main.innerHTML = '<div class="offering-loading"><span class="script">Something went wrong</span></div>';
+  }
+}
+
+loadOffering();
+</script>
+</body>
+</html>

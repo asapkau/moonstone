@@ -168,6 +168,9 @@ nav .container {
   gap: 3.5rem;
 }
 
+.offering-content:has(.product-showcase) { max-width: 1100px; }
+.offering-content:has(.booking-section) { max-width: 680px; }
+
 /* Description */
 .offering-description {
   animation: fadeUp 0.6s ease 0.3s both;
@@ -255,6 +258,837 @@ nav .container {
   border-color: var(--lavender-light);
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(44, 36, 55, 0.06);
+}
+
+/* ─── Product Showcase Grid ─── */
+.product-showcase {
+  animation: fadeUp 0.6s ease 0.4s both;
+}
+
+.product-showcase h3 {
+  font-size: 1.8rem;
+  color: var(--dusk);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.product-card {
+  background: var(--warm-white);
+  border-radius: 20px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease, border-color 0.4s ease;
+  cursor: default;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(184, 169, 201, 0.18), 0 8px 20px rgba(44, 36, 55, 0.06);
+  border-color: var(--lavender-light);
+}
+
+.product-card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--moonlight), var(--sand));
+  position: relative;
+}
+
+.product-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .product-card-image img {
+  transform: scale(1.06);
+}
+
+.product-card-image .energy-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(253, 251, 247, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 0.3rem 0.9rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  font-weight: 700;
+}
+
+.product-card-body {
+  padding: 1.5rem 1.4rem 1.6rem;
+}
+
+.product-card-body h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--dusk);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.product-card-body .product-desc {
+  font-size: 0.85rem;
+  color: var(--twilight);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--dusk);
+}
+
+.product-view {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.product-card:hover .product-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.product-loading {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--twilight);
+  opacity: 0.5;
+  font-family: 'Satisfy', cursive;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 1024px) {
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+}
+
+@media (max-width: 600px) {
+  .product-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .product-card-body h4 { font-size: 1.15rem; }
+}
+
+/* ─── Booking System ─── */
+.booking-section {
+  animation: fadeUp 0.6s ease 0.5s both;
+}
+
+.booking-section h3 {
+  font-size: 1.8rem;
+  color: var(--dusk);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.booking-section .booking-subtitle {
+  text-align: center;
+  color: var(--twilight);
+  font-size: 0.92rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.7;
+}
+
+/* Step indicator */
+.booking-steps {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.booking-step {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sand);
+  transition: color 0.3s;
+}
+
+.booking-step.active { color: var(--dusk); }
+.booking-step.done { color: var(--sage); }
+
+.booking-step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sand);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.booking-step.active .booking-step-dot { background: var(--lavender); transform: scale(1.3); }
+.booking-step.done .booking-step-dot { background: var(--sage); }
+
+.step-divider {
+  width: 30px;
+  height: 1px;
+  background: var(--sand);
+  align-self: center;
+}
+
+/* Selectable pricing cards */
+.pricing-select-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.pricing-select-card {
+  background: var(--warm-white);
+  border: 2px solid rgba(232, 223, 208, 0.4);
+  border-radius: 22px;
+  padding: 2.2rem 1.6rem 1.8rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  font-family: inherit;
+}
+
+.pricing-select-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lavender), var(--sage), var(--rose-mist));
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.pricing-select-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  background: radial-gradient(circle at 50% 0%, rgba(184, 169, 201, 0.06) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.pricing-select-card:hover {
+  border-color: var(--lavender-light);
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(184, 169, 201, 0.15), 0 4px 12px rgba(44, 36, 55, 0.04);
+}
+
+.pricing-select-card:hover::after { opacity: 1; }
+
+.pricing-select-card.selected {
+  border-color: var(--lavender);
+  background: linear-gradient(155deg, var(--warm-white) 0%, rgba(232, 224, 240, 0.35) 100%);
+  box-shadow: 0 12px 36px rgba(184, 169, 201, 0.22), 0 2px 8px rgba(44, 36, 55, 0.04);
+}
+
+.pricing-select-card.selected::before { opacity: 1; }
+.pricing-select-card.selected::after { opacity: 1; }
+
+.pricing-select-card .price-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--dusk);
+  display: block;
+  line-height: 1.3;
+  margin-bottom: 0.8rem;
+}
+
+.pricing-select-card .price-amount {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--dusk);
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+
+.pricing-select-card .price-amount::after { display: none; }
+
+.pricing-select-card .price-detail {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--sage-deep);
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-style: italic;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.pricing-select-card .price-check {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  color: transparent;
+  transition: all 0.35s;
+  background: transparent;
+}
+
+.pricing-select-card:hover .price-check {
+  border-color: var(--lavender-light);
+}
+
+.pricing-select-card.selected .price-check {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Calendar */
+.booking-calendar {
+  background: var(--warm-white);
+  border-radius: 20px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  padding: 1.8rem;
+  margin-bottom: 2rem;
+  display: none;
+}
+
+.booking-calendar.visible { display: block; }
+
+.cal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.cal-header h4 {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+.cal-nav {
+  background: none;
+  border: 1px solid var(--sand);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--twilight);
+  transition: all 0.3s;
+}
+
+.cal-nav:hover { border-color: var(--lavender); color: var(--dusk); }
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  margin-bottom: 0.5rem;
+}
+
+.cal-weekday {
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  opacity: 0.5;
+  padding: 0.4rem 0;
+}
+
+.cal-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--dusk);
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.cal-day:hover:not(.disabled):not(.empty) {
+  background: rgba(184, 169, 201, 0.15);
+}
+
+.cal-day.today {
+  font-weight: 700;
+  color: var(--sage-deep);
+}
+
+.cal-day.selected {
+  background: var(--lavender);
+  color: white;
+  font-weight: 700;
+}
+
+.cal-day.disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.cal-day.empty { cursor: default; }
+
+/* Time slots */
+.time-slots-section {
+  margin-bottom: 2rem;
+  display: none;
+}
+
+.time-slots-section.visible { display: block; }
+
+.time-slots-section h4 {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.time-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+
+.time-slot {
+  background: var(--warm-white);
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  border-radius: 12px;
+  padding: 0.7rem;
+  text-align: center;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  color: var(--dusk);
+  font-family: inherit;
+}
+
+.time-slot:hover {
+  border-color: var(--lavender-light);
+  background: rgba(184, 169, 201, 0.08);
+}
+
+.time-slot.selected {
+  background: var(--lavender);
+  border-color: var(--lavender);
+  color: white;
+  font-weight: 700;
+}
+
+.time-slot.booked {
+  opacity: 0.3;
+  cursor: default;
+  text-decoration: line-through;
+}
+
+/* Booking form */
+.booking-form {
+  display: none;
+  background: var(--warm-white);
+  border-radius: 20px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  padding: 2rem;
+}
+
+.booking-form.visible { display: block; }
+
+.booking-form h4 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin-bottom: 0.3rem;
+}
+
+.booking-form .form-summary {
+  font-size: 0.82rem;
+  color: var(--twilight);
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+}
+
+.booking-form .form-row {
+  margin-bottom: 1rem;
+}
+
+.booking-form label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  margin-bottom: 0.3rem;
+}
+
+.booking-form input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--sand);
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background: var(--cream);
+  color: var(--dusk);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.booking-form input:focus { border-color: var(--lavender); }
+
+.booking-submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--dusk);
+  color: var(--warm-white);
+  border: none;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+}
+
+.booking-submit:hover { background: var(--twilight); }
+.booking-submit:disabled { opacity: 0.5; cursor: default; }
+
+/* Confirmation */
+.booking-confirmed {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  display: none;
+}
+
+.booking-confirmed.visible { display: block; }
+
+.booking-confirmed .confirm-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(156, 175, 147, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.5rem;
+  color: var(--sage-deep);
+}
+
+.booking-confirmed h3 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+
+.booking-confirmed p {
+  color: var(--twilight);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.booking-confirmed .confirm-details {
+  background: var(--warm-white);
+  border-radius: 16px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  padding: 1.2rem 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 340px;
+  text-align: left;
+  font-size: 0.88rem;
+  line-height: 2;
+}
+
+@media (max-width: 768px) {
+  .pricing-select-grid { grid-template-columns: 1fr; }
+  .time-slots-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .time-slots-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ─── Community Gatherings ─── */
+.offering-content:has(.community-section) { max-width: 960px; }
+
+/* Hero orb */
+.community-hero-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 169, 201, 0.12) 0%, rgba(232, 224, 240, 0.06) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.offering-hero:has(+ .offering-body .community-section) { position: relative; }
+.offering-hero:has(+ .offering-body .community-section) .container { position: relative; z-index: 1; }
+
+.community-section { animation: fadeUp 0.6s ease 0.3s both; }
+
+/* Experience cards grid */
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.experience-card {
+  background: var(--warm-white);
+  border: 1px solid rgba(232, 223, 208, 0.45);
+  border-radius: 20px;
+  padding: 2rem 1.5rem 1.6rem;
+  text-align: center;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease, border-color 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 50% 0%, rgba(184, 169, 201, 0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+
+.experience-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(184, 169, 201, 0.14), 0 4px 12px rgba(44, 36, 55, 0.04);
+  border-color: var(--lavender-light);
+}
+
+.experience-card:hover::before { opacity: 1; }
+
+.experience-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.2rem;
+  font-size: 1.4rem;
+  background: linear-gradient(135deg, var(--moonlight), rgba(184, 169, 201, 0.2));
+  transition: transform 0.3s;
+}
+
+.experience-card:hover .experience-card-icon { transform: scale(1.1) rotate(3deg); }
+
+.experience-card:nth-child(2) .experience-card-icon { background: linear-gradient(135deg, rgba(156,175,147,0.15), rgba(156,175,147,0.3)); }
+.experience-card:nth-child(3) .experience-card-icon { background: linear-gradient(135deg, rgba(212,181,176,0.2), rgba(212,181,176,0.35)); }
+.experience-card:nth-child(4) .experience-card-icon { background: linear-gradient(135deg, rgba(168,196,192,0.2), rgba(168,196,192,0.35)); }
+.experience-card:nth-child(5) .experience-card-icon { background: linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.25)); }
+.experience-card:nth-child(6) .experience-card-icon { background: linear-gradient(135deg, var(--lavender-light), rgba(212,200,226,0.3)); }
+
+.experience-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: var(--dusk);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.experience-card p {
+  font-size: 0.82rem;
+  color: var(--twilight);
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* Values / safe space */
+.community-values {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  padding: 2.5rem 0;
+}
+
+.community-value {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.community-value-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  background: linear-gradient(135deg, var(--moonlight), rgba(184, 169, 201, 0.15));
+}
+
+.community-value:nth-child(2) .community-value-icon { background: linear-gradient(135deg, rgba(156,175,147,0.15), rgba(156,175,147,0.3)); }
+.community-value:nth-child(3) .community-value-icon { background: linear-gradient(135deg, rgba(212,181,176,0.15), rgba(212,181,176,0.3)); }
+
+.community-value h4 {
+  font-family: 'Quattrocento Sans', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  font-weight: 700;
+}
+
+/* Community pricing card */
+.community-pricing {
+  background: var(--warm-white);
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.community-pricing::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--lavender), var(--sage), var(--rose-mist));
+}
+
+.community-pricing .pricing-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.community-pricing .pricing-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  color: var(--dusk);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+.community-pricing .pricing-main strong {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+}
+
+.community-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--dusk);
+  color: var(--warm-white);
+  padding: 0.85rem 2rem;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  border: none;
+  cursor: pointer;
+  transition: all 0.35s;
+  text-decoration: none;
+}
+
+.community-cta:hover {
+  background: var(--twilight);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44, 36, 55, 0.15);
+}
+
+.community-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid var(--sand);
+  color: var(--twilight);
+  padding: 0.7rem 1.6rem;
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  margin-top: 0.8rem;
+}
+
+.community-cta-secondary:hover {
+  border-color: var(--lavender);
+  color: var(--dusk);
+}
+
+@media (max-width: 1024px) {
+  .experience-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .experience-grid { grid-template-columns: 1fr; }
+  .community-values { flex-direction: column; align-items: center; gap: 1.5rem; }
+  .community-hero-orb { width: 200px; height: 200px; }
 }
 
 /* Back link */
@@ -395,17 +1229,14 @@ footer {
       </div>
       <div class="footer-col">
         <h4>Offerings</h4>
-        <ul>
-          <li><a href="/offering.html?id=0">Offering 1</a></li>
-          <li><a href="/offering.html?id=1">Offering 2</a></li>
-          <li><a href="/offering.html?id=2">Offering 3</a></li>
-          <li><a href="/offering.html?id=3">Offering 4</a></li>
+        <ul id="footerOfferings">
+          <li><a href="/offering.html">Our Offerings</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
           <li><a href="#">Gift Cards</a></li>
           <li><a href="#">FAQ</a></li>
           <li><a href="#">Privacy Policy</a></li>
@@ -426,7 +1257,9 @@ footer {
 
 <script type="module">
 import { db } from "./js/firebase-config.js";
-import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+import {
+  doc, getDoc, collection, getDocs, addDoc, query, where, Timestamp
+} from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
 
 function esc(str) {
   if (!str) return '';
@@ -490,11 +1323,189 @@ async function loadOffering() {
         </div>`;
     }
 
+    // Detect offering type
+    const titleLower = (o.title || '').toLowerCase();
+    const isBraceletShop = titleLower.includes('bracelet') || titleLower.includes('crystal shop');
+    const isTarot = titleLower.includes('tarot') || titleLower.includes('reading');
+    const isCommunity = titleLower.includes('community') || titleLower.includes('circle') || titleLower.includes('gathering');
+
+    // Product showcase placeholder (loaded after render)
+    const productShowcaseHTML = isBraceletShop
+      ? `<div class="product-showcase">
+           <h3>Our Collection</h3>
+           <div class="product-grid" id="product-grid">
+             <div class="product-loading">loading collection...</div>
+           </div>
+         </div>`
+      : '';
+
+    // Booking section for tarot
+    let bookingHTML = '';
+    if (isTarot && o.pricing && o.pricing.length) {
+      const pricingCards = o.pricing.map((p, i) => {
+        // Parse: "1 Question Reading — $19 (10 minutes)" → name, price, detail
+        // Also handles: "Full Reading + Crystal — $82 (Includes one intuitively selected bracelet)"
+        let name = p, price = '', detail = '';
+
+        // Extract parenthetical
+        const parenMatch = p.match(/^(.+?)\s*\((.+)\)\s*$/);
+        const withoutParen = parenMatch ? parenMatch[1].trim() : p;
+        detail = parenMatch ? parenMatch[2].trim() : '';
+
+        // Extract price (e.g. "$19", "£28", "$82")
+        const priceMatch = withoutParen.match(/^(.+?)\s*[—–-]\s*([£$]?\d+.*)$/);
+        if (priceMatch) {
+          name = priceMatch[1].trim();
+          price = priceMatch[2].trim().replace(/^\$/, 'CA$').replace(/^£/, 'CA$');
+        } else {
+          name = withoutParen;
+        }
+
+        return `<button class="pricing-select-card" data-index="${i}" data-label="${esc(p)}">
+          <span class="price-check">&#10003;</span>
+          <span class="price-name">${esc(name)}</span>
+          ${price ? `<span class="price-amount">${esc(price)}</span>` : ''}
+          ${detail ? `<span class="price-detail">${esc(detail)}</span>` : ''}
+        </button>`;
+      }).join('');
+
+      bookingHTML = `
+        <div class="booking-section" id="booking-section">
+          <h3>Book a Session</h3>
+          <p class="booking-subtitle">Choose your reading, pick a date & time</p>
+
+          <div class="booking-steps">
+            <div class="booking-step active" data-step="1"><span class="booking-step-dot"></span> Service</div>
+            <div class="step-divider"></div>
+            <div class="booking-step" data-step="2"><span class="booking-step-dot"></span> Date</div>
+            <div class="step-divider"></div>
+            <div class="booking-step" data-step="3"><span class="booking-step-dot"></span> Time</div>
+            <div class="step-divider"></div>
+            <div class="booking-step" data-step="4"><span class="booking-step-dot"></span> Confirm</div>
+          </div>
+
+          <div class="pricing-select-grid" id="pricing-select">${pricingCards}</div>
+
+          <div class="booking-calendar" id="booking-calendar">
+            <div class="cal-header">
+              <button class="cal-nav" id="cal-prev">&larr;</button>
+              <h4 id="cal-month-label"></h4>
+              <button class="cal-nav" id="cal-next">&rarr;</button>
+            </div>
+            <div class="cal-weekdays">
+              <span class="cal-weekday">Sun</span><span class="cal-weekday">Mon</span>
+              <span class="cal-weekday">Tue</span><span class="cal-weekday">Wed</span>
+              <span class="cal-weekday">Thu</span><span class="cal-weekday">Fri</span>
+              <span class="cal-weekday">Sat</span>
+            </div>
+            <div class="cal-days" id="cal-days"></div>
+          </div>
+
+          <div class="time-slots-section" id="time-slots-section">
+            <h4 id="time-slots-label">Select a time</h4>
+            <div class="time-slots-grid" id="time-slots-grid"></div>
+          </div>
+
+          <div class="booking-form" id="booking-form">
+            <h4>Your Details</h4>
+            <p class="form-summary" id="booking-summary"></p>
+            <div class="form-row">
+              <label>Name</label>
+              <input type="text" id="booking-name" placeholder="Your full name" required />
+            </div>
+            <div class="form-row">
+              <label>Email</label>
+              <input type="email" id="booking-email" placeholder="your@email.com" required />
+            </div>
+            <button class="booking-submit" id="booking-submit-btn">Confirm Booking</button>
+          </div>
+
+          <div class="booking-confirmed" id="booking-confirmed">
+            <div class="confirm-icon">&#10003;</div>
+            <h3>Session Booked</h3>
+            <p>You will receive a confirmation email with your session details.</p>
+            <div class="confirm-details" id="confirm-details"></div>
+          </div>
+        </div>`;
+    }
+
+    // Community section builder
+    let communityHTML = '';
+    if (isCommunity) {
+      // Experience cards from examples
+      const EXPERIENCE_ICONS = ['&#9998;', '&#9749;', '&#9993;', '&#10024;', '&#127793;', '&#9775;', '&#10047;', '&#128161;'];
+      let experienceCardsHTML = '';
+      if (o.examples && o.examples.length) {
+        experienceCardsHTML = o.examples.map((ex, i) => {
+          // Parse "Title — Description" format
+          const dashMatch = ex.match(/^(.+?)\s*[—–]\s*(.+)$/);
+          const title = dashMatch ? dashMatch[1].trim() : ex;
+          const desc = dashMatch ? dashMatch[2].trim() : '';
+
+          return `<div class="experience-card">
+            <div class="experience-card-icon">${EXPERIENCE_ICONS[i % EXPERIENCE_ICONS.length]}</div>
+            <h4>${esc(title)}</h4>
+            ${desc ? `<p>${esc(desc)}</p>` : ''}
+          </div>`;
+        }).join('');
+      }
+
+      // Pricing card
+      const pricingContent = (o.pricing && o.pricing.length)
+        ? o.pricing.map(p => `<div>${esc(p)}</div>`).join('')
+        : '';
+
+      communityHTML = `
+        <div class="community-section">
+          <div class="experience-grid">${experienceCardsHTML}</div>
+
+          <div class="community-values">
+            <div class="community-value">
+              <div class="community-value-icon">&#128156;</div>
+              <h4>Inclusive</h4>
+            </div>
+            <div class="community-value">
+              <div class="community-value-icon">&#9878;</div>
+              <h4>Consent-Based</h4>
+            </div>
+            <div class="community-value">
+              <div class="community-value-icon">&#127808;</div>
+              <h4>Emotionally Safe</h4>
+            </div>
+          </div>
+
+          <div class="community-pricing">
+            <div class="pricing-label">Pop-Ups &amp; Community Events</div>
+            <div class="pricing-main">
+              ${pricingContent || '<strong>Free — CA$15</strong><div>Varies by event</div>'}
+            </div>
+            <a href="/#events" class="community-cta">View Upcoming Events</a>
+            <br>
+            <a href="/#newsletter" class="community-cta-secondary">Stay in the loop</a>
+          </div>
+        </div>`;
+    }
+
     // First sentence as intro
     const firstSentence = o.description ? o.description.split(/(?<=[.!?])\s+/)[0] : '';
 
+    // Choose body content based on offering type
+    let bodyContent = '';
+    if (isCommunity) {
+      bodyContent = `
+        <div class="offering-description">${descParagraphs}</div>
+        ${communityHTML}`;
+    } else {
+      bodyContent = `
+        <div class="offering-description">${descParagraphs}</div>
+        ${productShowcaseHTML}
+        ${examplesHTML}
+        ${isTarot ? bookingHTML : pricingHTML}`;
+    }
+
     main.innerHTML = `
       <section class="offering-hero">
+        ${isCommunity ? '<div class="community-hero-orb"></div>' : ''}
         <div class="container">
           <span class="script">our offerings</span>
           <h1>${esc(o.title)}</h1>
@@ -504,24 +1515,323 @@ async function loadOffering() {
       <section class="offering-body">
         <div class="container">
           <div class="offering-content">
-            <div class="offering-description">
-              ${descParagraphs}
-            </div>
-            ${examplesHTML}
-            ${pricingHTML}
+            ${bodyContent}
             <div class="offering-back">
               <a href="/#services">← Back to all offerings</a>
             </div>
           </div>
         </div>
       </section>`;
+
+    // Load products if bracelet shop
+    if (isBraceletShop) {
+      loadProducts();
+    }
+
+    // Init booking system if tarot
+    if (isTarot) {
+      initBookingSystem(o.title);
+    }
   } catch (err) {
     console.error('Failed to load offering:', err);
     main.innerHTML = '<div class="offering-loading"><span class="script">Something went wrong</span></div>';
   }
 }
 
+// ─── Energy tag detection ───
+const ENERGY_KEYWORDS = {
+  'clarity': 'Clarity', 'clear': 'Clarity', 'focus': 'Focus',
+  'love': 'Love', 'heart': 'Love', 'compassion': 'Love',
+  'protection': 'Protection', 'shield': 'Protection', 'guard': 'Protection',
+  'grounding': 'Grounding', 'ground': 'Grounding', 'earth': 'Grounding', 'stability': 'Grounding',
+  'confidence': 'Confidence', 'courage': 'Courage', 'strength': 'Strength',
+  'calm': 'Calm', 'peace': 'Peace', 'serenity': 'Peace', 'anxiety': 'Calm',
+  'healing': 'Healing', 'balance': 'Balance', 'harmony': 'Balance',
+  'intuition': 'Intuition', 'spiritual': 'Spiritual', 'wisdom': 'Wisdom',
+  'growth': 'Growth', 'abundance': 'Abundance', 'prosperity': 'Abundance',
+  'energy': 'Energy', 'vitality': 'Energy', 'creativity': 'Creativity'
+};
+
+function detectEnergy(text) {
+  if (!text) return null;
+  const lower = text.toLowerCase();
+  for (const [keyword, label] of Object.entries(ENERGY_KEYWORDS)) {
+    if (lower.includes(keyword)) return label;
+  }
+  return null;
+}
+
+// ─── Load Products Grid ───
+async function loadProducts() {
+  const grid = document.getElementById('product-grid');
+  if (!grid) return;
+
+  try {
+    const snap = await getDocs(collection(db, "products"));
+
+    if (snap.empty) {
+      grid.innerHTML = '<div class="product-loading">No bracelets available yet</div>';
+      return;
+    }
+
+    const products = [];
+    snap.forEach(d => products.push(d.data()));
+
+    grid.innerHTML = products.map(p => {
+      const energy = detectEnergy(p.description || p.name);
+      const energyTag = energy ? `<span class="energy-tag">${esc(energy)}</span>` : '';
+      const desc = p.description
+        ? esc(p.description).substring(0, 80) + (p.description.length > 80 ? '...' : '')
+        : '';
+
+      return `
+        <div class="product-card">
+          <div class="product-card-image">
+            ${p.imageUrl ? `<img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" />` : ''}
+            ${energyTag}
+          </div>
+          <div class="product-card-body">
+            <h4>${esc(p.name)}</h4>
+            <p class="product-desc">${desc}</p>
+            <div class="product-card-footer">
+              <span class="product-price">CA$${p.price}</span>
+              <span class="product-view">View details</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch (err) {
+    console.error('Failed to load products:', err);
+    grid.innerHTML = '<div class="product-loading">Unable to load collection</div>';
+  }
+}
+
+// ─── Booking System ───
+function initBookingSystem(offeringTitle) {
+  let selectedService = '';
+  let selectedDate = '';
+  let selectedTime = '';
+  let calMonth = new Date().getMonth();
+  let calYear = new Date().getFullYear();
+
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const TIME_SLOTS = [
+    '10:00', '10:30', '11:00', '11:30',
+    '12:00', '13:00', '13:30', '14:00',
+    '14:30', '15:00', '15:30', '16:00'
+  ];
+
+  function updateSteps(step) {
+    document.querySelectorAll('.booking-step').forEach(s => {
+      const n = parseInt(s.dataset.step);
+      s.classList.toggle('active', n === step);
+      s.classList.toggle('done', n < step);
+    });
+  }
+
+  // Service selection
+  document.getElementById('pricing-select').addEventListener('click', (e) => {
+    const card = e.target.closest('.pricing-select-card');
+    if (!card) return;
+
+    document.querySelectorAll('.pricing-select-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selectedService = card.dataset.label;
+
+    // Show calendar
+    document.getElementById('booking-calendar').classList.add('visible');
+    updateSteps(2);
+    renderCalendar();
+
+    // Scroll to calendar
+    document.getElementById('booking-calendar').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // Calendar rendering
+  function renderCalendar() {
+    const label = document.getElementById('cal-month-label');
+    const daysContainer = document.getElementById('cal-days');
+    label.textContent = `${MONTHS[calMonth]} ${calYear}`;
+
+    const firstDay = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let html = '';
+    // Empty cells for offset
+    for (let i = 0; i < firstDay; i++) {
+      html += '<button class="cal-day empty"></button>';
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(calYear, calMonth, d);
+      const dateStr = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const isPast = date < today;
+      const isSunday = date.getDay() === 0;
+      const isToday = date.getTime() === today.getTime();
+      const isSelected = dateStr === selectedDate;
+      const disabled = isPast || isSunday;
+
+      let classes = 'cal-day';
+      if (disabled) classes += ' disabled';
+      if (isToday) classes += ' today';
+      if (isSelected) classes += ' selected';
+
+      html += `<button class="${classes}" data-date="${dateStr}" ${disabled ? 'disabled' : ''}>${d}</button>`;
+    }
+
+    daysContainer.innerHTML = html;
+
+    // Day click handlers
+    daysContainer.querySelectorAll('.cal-day:not(.disabled):not(.empty)').forEach(btn => {
+      btn.addEventListener('click', () => selectDate(btn.dataset.date));
+    });
+  }
+
+  document.getElementById('cal-prev').addEventListener('click', () => {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCalendar();
+  });
+
+  document.getElementById('cal-next').addEventListener('click', () => {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCalendar();
+  });
+
+  // Date selection
+  async function selectDate(dateStr) {
+    selectedDate = dateStr;
+    selectedTime = '';
+    renderCalendar();
+    updateSteps(3);
+
+    const slotsSection = document.getElementById('time-slots-section');
+    const grid = document.getElementById('time-slots-grid');
+    const label = document.getElementById('time-slots-label');
+    slotsSection.classList.add('visible');
+
+    const d = new Date(dateStr + 'T00:00:00');
+    label.textContent = `Available times — ${MONTHS[d.getMonth()]} ${d.getDate()}`;
+
+    // Fetch existing bookings for this date
+    let bookedTimes = [];
+    try {
+      const q = query(collection(db, "bookings"), where("date", "==", dateStr));
+      const snap = await getDocs(q);
+      snap.forEach(doc => bookedTimes.push(doc.data().time));
+    } catch (err) {
+      console.error('Failed to fetch bookings:', err);
+    }
+
+    grid.innerHTML = TIME_SLOTS.map(t => {
+      const isBooked = bookedTimes.includes(t);
+      return `<button class="time-slot${isBooked ? ' booked' : ''}" data-time="${t}" ${isBooked ? 'disabled' : ''}>${t}</button>`;
+    }).join('');
+
+    grid.querySelectorAll('.time-slot:not(.booked)').forEach(btn => {
+      btn.addEventListener('click', () => selectTime(btn.dataset.time));
+    });
+
+    slotsSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Time selection
+  function selectTime(time) {
+    selectedTime = time;
+    document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+    document.querySelector(`.time-slot[data-time="${time}"]`).classList.add('selected');
+    updateSteps(4);
+
+    // Show form
+    const form = document.getElementById('booking-form');
+    form.classList.add('visible');
+
+    const d = new Date(selectedDate + 'T00:00:00');
+    document.getElementById('booking-summary').textContent =
+      `${selectedService} · ${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} at ${selectedTime}`;
+
+    form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Submit booking
+  document.getElementById('booking-submit-btn').addEventListener('click', async () => {
+    const name = document.getElementById('booking-name').value.trim();
+    const email = document.getElementById('booking-email').value.trim();
+
+    if (!name || !email) {
+      alert('Please fill in your name and email.');
+      return;
+    }
+
+    if (!selectedService || !selectedDate || !selectedTime) {
+      alert('Please complete all booking steps.');
+      return;
+    }
+
+    const btn = document.getElementById('booking-submit-btn');
+    btn.textContent = 'Booking...';
+    btn.disabled = true;
+
+    try {
+      await addDoc(collection(db, "bookings"), {
+        name,
+        email,
+        service: selectedService,
+        date: selectedDate,
+        time: selectedTime,
+        offeringTitle: offeringTitle,
+        createdAt: Timestamp.now()
+      });
+
+      // Hide everything, show confirmation
+      document.getElementById('pricing-select').style.display = 'none';
+      document.getElementById('booking-calendar').style.display = 'none';
+      document.getElementById('time-slots-section').style.display = 'none';
+      document.getElementById('booking-form').style.display = 'none';
+      document.querySelector('.booking-steps').style.display = 'none';
+      document.querySelector('.booking-subtitle').style.display = 'none';
+
+      const d = new Date(selectedDate + 'T00:00:00');
+      const confirmed = document.getElementById('booking-confirmed');
+      confirmed.classList.add('visible');
+      document.getElementById('confirm-details').innerHTML = `
+        <strong>Service:</strong> ${esc(selectedService)}<br>
+        <strong>Date:</strong> ${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}<br>
+        <strong>Time:</strong> ${selectedTime}<br>
+        <strong>Name:</strong> ${esc(name)}`;
+
+      confirmed.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      console.error('Booking failed:', err);
+      alert('Something went wrong. Please try again.');
+      btn.textContent = 'Confirm Booking';
+      btn.disabled = false;
+    }
+  });
+}
+
 loadOffering();
+
+// ─── Footer Offerings ───
+async function loadFooterOfferings() {
+  const list = document.getElementById('footerOfferings');
+  if (!list) return;
+  try {
+    const snap = await getDoc(doc(db, "content", "main"));
+    if (!snap.exists()) return;
+    const { offerings } = snap.data();
+    if (!offerings || !offerings.length) return;
+    list.innerHTML = offerings.map((o, i) =>
+      `<li><a href="/offering.html?id=${i}">${esc(o.title)}</a></li>`
+    ).join('');
+  } catch (err) {}
+}
+loadFooterOfferings();
 </script>
 </body>
 </html>

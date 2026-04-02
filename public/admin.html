@@ -353,6 +353,56 @@ h1, h2, h3 {
 
 .save-status.show { opacity: 1; }
 
+/* ─── Booking Sub-tabs ─── */
+.booking-subtabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.booking-subtab {
+  padding: 0.5rem 1.5rem;
+  background: none;
+  border: 1px solid var(--sand);
+  border-radius: 50px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  color: var(--twilight);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.booking-subtab.active {
+  background: var(--dusk);
+  color: var(--warm-white);
+  border-color: var(--dusk);
+}
+
+.booking-subtab:hover:not(.active) {
+  border-color: var(--lavender);
+}
+
+.booking-subpanel { display: none; }
+.booking-subpanel.active { display: block; }
+
+.btn-complete {
+  background: rgba(156, 175, 147, 0.15);
+  color: var(--sage-deep);
+  padding: 0.4rem 1rem;
+  font-size: 0.8rem;
+}
+
+.btn-complete:hover {
+  background: rgba(156, 175, 147, 0.3);
+}
+
+.item-meta-completed {
+  font-size: 0.75rem;
+  color: var(--sage-deep);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 600px) {
   .dash-body { padding: 1rem; }
@@ -385,6 +435,7 @@ h1, h2, h3 {
     <h1>Moonstone</h1>
     <div class="dash-header-right">
       <span class="dash-user" id="dashUser"></span>
+      <a href="/" class="btn btn-ghost btn-small">View Site</a>
       <button class="btn btn-ghost btn-small" id="signOutBtn">Sign Out</button>
     </div>
   </header>
@@ -394,6 +445,8 @@ h1, h2, h3 {
       <button class="tab-btn active" data-tab="products">Products</button>
       <button class="tab-btn" data-tab="events">Events</button>
       <button class="tab-btn" data-tab="content">Content</button>
+      <button class="tab-btn" data-tab="contact">Contact</button>
+      <button class="tab-btn" data-tab="bookings">Bookings</button>
     </div>
 
     <!-- Products Tab -->
@@ -430,10 +483,22 @@ h1, h2, h3 {
           <label>Story Text</label>
           <textarea id="ourStoryText" rows="6" placeholder="Write the Our Story text..."></textarea>
         </div>
-        <div class="form-group">
-          <label>Story Image</label>
-          <input type="file" id="ourStoryImageInput" accept="image/*" />
-          <img id="ourStoryImagePreview" class="img-preview" style="display:none;" />
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.2rem;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Photo 1</label>
+            <input type="file" id="storyPhoto1" accept="image/*" />
+            <img id="storyPhotoPreview1" class="img-preview" style="display:none;" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Photo 2</label>
+            <input type="file" id="storyPhoto2" accept="image/*" />
+            <img id="storyPhotoPreview2" class="img-preview" style="display:none;" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label>Photo 3</label>
+            <input type="file" id="storyPhoto3" accept="image/*" />
+            <img id="storyPhotoPreview3" class="img-preview" style="display:none;" />
+          </div>
         </div>
         <div class="form-actions" style="justify-content:flex-start;">
           <button class="btn btn-primary" id="saveStoryBtn">Save Our Story</button>
@@ -452,6 +517,70 @@ h1, h2, h3 {
       </div>
 
     </div>
+
+    <!-- Contact Tab -->
+    <div class="tab-panel" id="tab-contact">
+      <div class="section-top">
+        <h2>Contact Page</h2>
+      </div>
+      <div class="content-section">
+        <div class="form-group">
+          <label>Founder Name</label>
+          <input type="text" id="contactFounderName" placeholder="e.g. Zalak Mehta" />
+        </div>
+        <div class="form-group">
+          <label>Founder Title</label>
+          <input type="text" id="contactFounderTitle" placeholder="e.g. Founder & Crystal Healer" />
+        </div>
+        <div class="form-group">
+          <label>Founder Photo</label>
+          <input type="file" id="contactPhotoInput" accept="image/*" />
+          <img id="contactPhotoPreview" class="img-preview" style="display:none;" />
+        </div>
+        <div class="form-group">
+          <label>Intro Text</label>
+          <textarea id="contactIntroText" rows="4" placeholder="A warm intro paragraph about reaching out..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="text" id="contactPhone" placeholder="e.g. +1 (604) 555-0123" />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="contactEmail" placeholder="e.g. hello@moonstone.ca" />
+        </div>
+        <div class="form-group">
+          <label>Location</label>
+          <input type="text" id="contactLocation" placeholder="e.g. Vancouver, BC, Canada" />
+        </div>
+        <div class="form-group">
+          <label>Closing Message</label>
+          <input type="text" id="contactClosingMessage" placeholder="e.g. Every crystal finds its person..." />
+        </div>
+        <div class="form-actions" style="justify-content:flex-start;">
+          <button class="btn btn-primary" id="saveContactBtn">Save Contact Info</button>
+          <span class="save-status" id="contactStatus"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bookings Tab -->
+    <div class="tab-panel" id="tab-bookings">
+      <div class="booking-subtabs">
+        <button class="booking-subtab active" data-subtab="active">Active Bookings</button>
+        <button class="booking-subtab" data-subtab="history">History</button>
+      </div>
+      <div class="booking-subpanel active" id="subtab-active">
+        <div class="item-list" id="bookingList">
+          <div class="empty-state"><p>Loading...</p></div>
+        </div>
+      </div>
+      <div class="booking-subpanel" id="subtab-history">
+        <div class="item-list" id="bookingHistory">
+          <div class="empty-state"><p>Loading...</p></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -466,17 +595,28 @@ h1, h2, h3 {
         <input type="text" id="productName" required placeholder="e.g. Amethyst Bracelet" />
       </div>
       <div class="form-group">
-        <label>Price (£)</label>
+        <label>Price (CA$)</label>
         <input type="number" id="productPrice" required placeholder="28" min="0" step="1" />
       </div>
       <div class="form-group">
-        <label>Description</label>
-        <textarea id="productDescription" required placeholder="A brief description..."></textarea>
+        <label>Tagline (one-liner for homepage)</label>
+        <input type="text" id="productTagline" placeholder="e.g. Calming energy & inner peace" />
+      </div>
+      <div class="form-group">
+        <label>Full Description (shown on product page)</label>
+        <textarea id="productDescription" required placeholder="A detailed description..."></textarea>
       </div>
       <div class="form-group">
         <label>Image</label>
         <input type="file" id="productImage" accept="image/*" />
         <img id="productImagePreview" class="img-preview" style="display:none;" />
+      </div>
+      <div class="form-group">
+        <label>Background Color (for product page)</label>
+        <div style="display:flex;gap:0.8rem;align-items:center;">
+          <input type="color" id="productColor" value="#F5F0E8" style="width:50px;height:36px;border:1px solid var(--sand);border-radius:8px;cursor:pointer;" />
+          <span id="productColorLabel" style="font-size:0.85rem;color:var(--twilight);">#F5F0E8</span>
+        </div>
       </div>
       <div class="form-actions">
         <button type="button" class="btn btn-ghost" id="cancelProductBtn">Cancel</button>
@@ -590,16 +730,19 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 // ─── Real-time Listeners ───
 let productUnsub = null;
 let eventUnsub = null;
+let bookingUnsub = null;
 let contentLoaded = false;
 
 function initListeners() {
   if (productUnsub) productUnsub();
   if (eventUnsub) eventUnsub();
+  if (bookingUnsub) bookingUnsub();
 
   // Load content editor data
   if (!contentLoaded) {
     contentLoaded = true;
     loadContent();
+    loadContactData();
   }
 
   // Products listener
@@ -619,7 +762,7 @@ function initListeners() {
         <div class="item-details">
           <h3>${esc(p.name)}</h3>
           <p>${esc(p.description)}</p>
-          <p class="item-meta">£${p.price || 0}</p>
+          <p class="item-meta">CA$${p.price || 0}</p>
         </div>
         <div class="item-actions">
           <button class="btn btn-edit btn-small" data-edit-product="${docSnap.id}">Edit</button>
@@ -670,7 +813,115 @@ function initListeners() {
       btn.addEventListener('click', () => deleteEvent(btn.dataset.deleteEvent, btn.dataset.name));
     });
   });
+
+  // Bookings listener
+  bookingUnsub = onSnapshot(collection(db, "bookings"), (snapshot) => {
+    const activeList = document.getElementById('bookingList');
+    const historyList = document.getElementById('bookingHistory');
+
+    if (snapshot.empty) {
+      activeList.innerHTML = '<div class="empty-state"><p>No active bookings</p></div>';
+      historyList.innerHTML = '<div class="empty-state"><p>No completed bookings yet</p></div>';
+      return;
+    }
+
+    const active = [];
+    const completed = [];
+    snapshot.forEach(docSnap => {
+      const b = { id: docSnap.id, ...docSnap.data() };
+      if (b.status === 'completed') {
+        completed.push(b);
+      } else {
+        active.push(b);
+      }
+    });
+
+    // Sort by date descending
+    active.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+    completed.sort((a, b) => (b.completedAt || b.date || '').localeCompare(a.completedAt || a.date || ''));
+
+    // Render active bookings
+    if (active.length === 0) {
+      activeList.innerHTML = '<div class="empty-state"><p>No active bookings</p></div>';
+    } else {
+      activeList.innerHTML = '';
+      active.forEach(b => {
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.innerHTML = `
+          <div class="item-details">
+            <h3>${esc(b.name)}</h3>
+            <p>${esc(b.service)}</p>
+            <p class="item-meta">${esc(b.date)} at ${esc(b.time)} · ${esc(b.email)}</p>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-complete btn-small" data-complete-booking="${b.id}">Done</button>
+            <button class="btn btn-delete btn-small" data-delete-booking="${b.id}" data-name="${esc(b.name)}">Delete</button>
+          </div>`;
+        activeList.appendChild(row);
+      });
+    }
+
+    // Render completed bookings
+    if (completed.length === 0) {
+      historyList.innerHTML = '<div class="empty-state"><p>No completed bookings yet</p></div>';
+    } else {
+      historyList.innerHTML = '';
+      completed.forEach(b => {
+        const row = document.createElement('div');
+        row.className = 'item-row';
+        row.style.opacity = '0.75';
+        row.innerHTML = `
+          <div class="item-details">
+            <h3>${esc(b.name)}</h3>
+            <p>${esc(b.service)}</p>
+            <p class="item-meta">${esc(b.date)} at ${esc(b.time)} · ${esc(b.email)}</p>
+            <p class="item-meta-completed">Completed ${b.completedAt || ''}</p>
+          </div>
+          <div class="item-actions">
+            <button class="btn btn-delete btn-small" data-delete-booking="${b.id}" data-name="${esc(b.name)}">Delete</button>
+          </div>`;
+        historyList.appendChild(row);
+      });
+    }
+
+    // Attach handlers — complete
+    activeList.querySelectorAll('[data-complete-booking]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        try {
+          await updateDoc(doc(db, "bookings", btn.dataset.completeBooking), {
+            status: 'completed',
+            completedAt: new Date().toISOString().split('T')[0]
+          });
+        } catch (err) {
+          alert('Error completing booking: ' + err.message);
+        }
+      });
+    });
+
+    // Attach handlers — delete (both lists)
+    document.querySelectorAll('[data-delete-booking]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Delete booking for "' + btn.dataset.name + '"?')) return;
+        try {
+          await deleteDoc(doc(db, "bookings", btn.dataset.deleteBooking));
+        } catch (err) {
+          alert('Error deleting booking: ' + err.message);
+        }
+      });
+    });
+  });
 }
+
+// ─── Booking Sub-tabs ───
+document.querySelectorAll('.booking-subtab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.booking-subtab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.booking-subpanel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('subtab-' + btn.dataset.subtab).classList.add('active');
+  });
+});
 
 // ─── Product CRUD ───
 const productFormOverlay = document.getElementById('productFormOverlay');
@@ -685,8 +936,11 @@ function openProductForm(data) {
   document.getElementById('productId').value = data ? data.id : '';
   document.getElementById('productName').value = data ? data.name : '';
   document.getElementById('productPrice').value = data ? data.price : '';
+  document.getElementById('productTagline').value = data ? (data.tagline || '') : '';
   document.getElementById('productDescription').value = data ? data.description : '';
   document.getElementById('productImage').value = '';
+  document.getElementById('productColor').value = data && data.bgColor ? data.bgColor : '#F5F0E8';
+  document.getElementById('productColorLabel').textContent = data && data.bgColor ? data.bgColor : '#F5F0E8';
 
   const preview = document.getElementById('productImagePreview');
   if (data && data.imageUrl) {
@@ -698,6 +952,11 @@ function openProductForm(data) {
 
   productFormOverlay.classList.add('open');
 }
+
+// Color picker label sync
+document.getElementById('productColor').addEventListener('input', (e) => {
+  document.getElementById('productColorLabel').textContent = e.target.value;
+});
 
 function closeProductForm() {
   productFormOverlay.classList.remove('open');
@@ -726,7 +985,9 @@ document.getElementById('productForm').addEventListener('submit', async (e) => {
     const data = {
       name: document.getElementById('productName').value.trim(),
       price: parseInt(document.getElementById('productPrice').value) || 0,
-      description: document.getElementById('productDescription').value.trim()
+      tagline: document.getElementById('productTagline').value.trim(),
+      description: document.getElementById('productDescription').value.trim(),
+      bgColor: document.getElementById('productColor').value
     };
 
     if (imageUrl) data.imageUrl = imageUrl;
@@ -865,7 +1126,7 @@ async function deleteEvent(id, title) {
 
 // ─── Content Management ───
 const contentDocRef = doc(db, "content", "main");
-let currentStoryImageUrl = '';
+let currentStoryPhotos = ['', '', ''];
 
 // Load content when Content tab is first opened
 async function loadContent() {
@@ -876,11 +1137,16 @@ async function loadContent() {
 
     // Our Story
     document.getElementById('ourStoryText').value = data.ourStory || '';
-    const preview = document.getElementById('ourStoryImagePreview');
-    if (data.ourStoryImage) {
-      currentStoryImageUrl = data.ourStoryImage;
-      preview.src = data.ourStoryImage;
-      preview.style.display = 'block';
+
+    // Story photos
+    const photos = data.ourStoryPhotos || [];
+    for (let i = 0; i < 3; i++) {
+      if (photos[i]) {
+        currentStoryPhotos[i] = photos[i];
+        const preview = document.getElementById('storyPhotoPreview' + (i + 1));
+        preview.src = photos[i];
+        preview.style.display = 'block';
+      }
     }
 
     // Offerings
@@ -890,15 +1156,17 @@ async function loadContent() {
   }
 }
 
-// Image preview on file select
-document.getElementById('ourStoryImageInput').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  const preview = document.getElementById('ourStoryImagePreview');
-  if (file) {
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = 'block';
-  }
-});
+// Photo preview on file select
+for (let i = 1; i <= 3; i++) {
+  document.getElementById('storyPhoto' + i).addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    const preview = document.getElementById('storyPhotoPreview' + i);
+    if (file) {
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = 'block';
+    }
+  });
+}
 
 // Save Our Story
 document.getElementById('saveStoryBtn').addEventListener('click', async () => {
@@ -908,21 +1176,21 @@ document.getElementById('saveStoryBtn').addEventListener('click', async () => {
   btn.disabled = true;
 
   try {
-    const fileInput = document.getElementById('ourStoryImageInput');
-    let imageUrl = currentStoryImageUrl;
-
-    if (fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      const storageRef = ref(storage, 'content/' + Date.now() + '_' + file.name);
-      const snap = await uploadBytes(storageRef, file);
-      imageUrl = await getDownloadURL(snap.ref);
-      currentStoryImageUrl = imageUrl;
+    // Upload any new photos
+    for (let i = 1; i <= 3; i++) {
+      const fileInput = document.getElementById('storyPhoto' + i);
+      if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const storageRef = ref(storage, 'content/story_' + i + '_' + Date.now() + '_' + file.name);
+        const snap = await uploadBytes(storageRef, file);
+        currentStoryPhotos[i - 1] = await getDownloadURL(snap.ref);
+      }
     }
 
     const updateData = {
-      ourStory: document.getElementById('ourStoryText').value.trim()
+      ourStory: document.getElementById('ourStoryText').value.trim(),
+      ourStoryPhotos: currentStoryPhotos
     };
-    if (imageUrl) updateData.ourStoryImage = imageUrl;
 
     await updateDoc(contentDocRef, updateData);
 
@@ -1041,6 +1309,90 @@ document.getElementById('saveOfferingsBtn').addEventListener('click', async () =
   }
 
   btn.textContent = 'Save All Offerings';
+  btn.disabled = false;
+});
+
+// ─── Contact Management ───
+const contactDocRef = doc(db, "content", "contact");
+let currentContactPhotoUrl = '';
+
+async function loadContactData() {
+  try {
+    const snap = await getDoc(contactDocRef);
+    if (!snap.exists()) return;
+    const c = snap.data();
+
+    document.getElementById('contactFounderName').value = c.founderName || '';
+    document.getElementById('contactFounderTitle').value = c.founderTitle || '';
+    document.getElementById('contactIntroText').value = c.intro || '';
+    document.getElementById('contactPhone').value = c.phone || '';
+    document.getElementById('contactEmail').value = c.email || '';
+    document.getElementById('contactLocation').value = c.location || '';
+    document.getElementById('contactClosingMessage').value = c.message || '';
+
+    const preview = document.getElementById('contactPhotoPreview');
+    if (c.founderPhoto) {
+      currentContactPhotoUrl = c.founderPhoto;
+      preview.src = c.founderPhoto;
+      preview.style.display = 'block';
+    }
+  } catch (err) {
+    console.error('Failed to load contact:', err);
+  }
+}
+
+document.getElementById('contactPhotoInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  const preview = document.getElementById('contactPhotoPreview');
+  if (file) {
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = 'block';
+  }
+});
+
+document.getElementById('saveContactBtn').addEventListener('click', async () => {
+  const btn = document.getElementById('saveContactBtn');
+  const status = document.getElementById('contactStatus');
+  btn.innerHTML = '<span class="spinner"></span> Saving...';
+  btn.disabled = true;
+
+  try {
+    const fileInput = document.getElementById('contactPhotoInput');
+    let photoUrl = currentContactPhotoUrl;
+
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      const storageRef = ref(storage, 'contact/' + Date.now() + '_' + file.name);
+      const snap = await uploadBytes(storageRef, file);
+      photoUrl = await getDownloadURL(snap.ref);
+      currentContactPhotoUrl = photoUrl;
+    }
+
+    const data = {
+      founderName: document.getElementById('contactFounderName').value.trim(),
+      founderTitle: document.getElementById('contactFounderTitle').value.trim(),
+      intro: document.getElementById('contactIntroText').value.trim(),
+      phone: document.getElementById('contactPhone').value.trim(),
+      email: document.getElementById('contactEmail').value.trim(),
+      location: document.getElementById('contactLocation').value.trim(),
+      message: document.getElementById('contactClosingMessage').value.trim()
+    };
+
+    if (photoUrl) data.founderPhoto = photoUrl;
+
+    // Use setDoc with merge to create or update
+    const { setDoc } = await import("https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js");
+    await setDoc(contactDocRef, data, { merge: true });
+
+    status.textContent = 'Saved!';
+    status.classList.add('show');
+    setTimeout(() => status.classList.remove('show'), 2000);
+  } catch (err) {
+    console.error('Save contact error:', err);
+    alert('Error saving contact: ' + err.message);
+  }
+
+  btn.textContent = 'Save Contact Info';
   btn.disabled = false;
 });
 

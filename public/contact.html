@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Moonstone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Quattrocento+Sans:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #F5F0E8;
+  --sand: #E8DFD0;
+  --sage: #9CAF93;
+  --sage-deep: #6B8F60;
+  --lavender: #B8A9C9;
+  --lavender-light: #D4C8E2;
+  --moonlight: #E8E0F0;
+  --rose-mist: #D4B5B0;
+  --dusk: #2C2437;
+  --twilight: #4A3F5C;
+  --warm-white: #FDFBF7;
+  --gold-soft: #C9A96E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Quattrocento Sans', sans-serif;
+  background: var(--cream);
+  color: var(--dusk);
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+a { text-decoration: none; color: inherit; transition: all 0.4s ease; }
+
+/* ─── Nav ─── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 1.2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(253, 251, 247, 0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(232, 223, 208, 0.4);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--dusk);
+}
+
+.nav-back {
+  font-size: 0.85rem;
+  color: var(--twilight);
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+
+.nav-back:hover { color: var(--lavender); }
+
+/* ─── Hero Banner ─── */
+.contact-hero {
+  padding: 10rem 2rem 5rem;
+  text-align: center;
+  background: linear-gradient(160deg, var(--cream) 0%, var(--moonlight) 40%, var(--lavender-light) 70%, var(--sand) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(184, 169, 201, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.contact-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(212, 181, 176, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.contact-hero .script {
+  font-family: 'Satisfy', cursive;
+  font-size: 1.2rem;
+  color: var(--sage-deep);
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.contact-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: var(--dusk);
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+}
+
+.contact-hero p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: var(--twilight);
+  font-size: 1.05rem;
+}
+
+/* ─── Main Content ─── */
+.contact-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 5rem 2rem 6rem;
+}
+
+.contact-card {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 4rem;
+  align-items: start;
+  background: var(--warm-white);
+  border-radius: 28px;
+  padding: 3.5rem;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  box-shadow: 0 12px 50px rgba(44, 36, 55, 0.05);
+}
+
+/* ─── Founder Photo ─── */
+.founder-photo-section {
+  text-align: center;
+}
+
+.founder-photo {
+  width: 280px;
+  height: 340px;
+  border-radius: 24px;
+  object-fit: cover;
+  border: 3px solid var(--sand);
+  box-shadow: 0 8px 30px rgba(44, 36, 55, 0.08);
+  background: linear-gradient(135deg, var(--moonlight) 0%, var(--lavender-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.founder-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.founder-photo-placeholder {
+  width: 280px;
+  height: 340px;
+  border-radius: 24px;
+  border: 3px solid var(--sand);
+  box-shadow: 0 8px 30px rgba(44, 36, 55, 0.08);
+  background: linear-gradient(135deg, var(--moonlight) 0%, var(--lavender-light) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: var(--lavender);
+  font-size: 4rem;
+}
+
+.founder-name-below {
+  margin-top: 1.5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--dusk);
+}
+
+.founder-title-below {
+  font-family: 'Satisfy', cursive;
+  color: var(--sage-deep);
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+/* ─── Contact Details ─── */
+.contact-details {
+  padding-top: 0.5rem;
+}
+
+.contact-details h2 {
+  font-size: 2rem;
+  color: var(--dusk);
+  margin-bottom: 0.5rem;
+}
+
+.contact-details .script {
+  font-family: 'Satisfy', cursive;
+  color: var(--sage-deep);
+  font-size: 1.05rem;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.contact-details p.intro {
+  color: var(--twilight);
+  font-size: 0.95rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(232, 223, 208, 0.4);
+}
+
+.contact-item:last-child { border-bottom: none; }
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contact-icon.phone { background: rgba(156, 175, 147, 0.15); }
+.contact-icon.email { background: rgba(184, 169, 201, 0.15); }
+.contact-icon.location { background: rgba(212, 181, 176, 0.15); }
+
+.contact-item-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--twilight);
+  opacity: 0.7;
+  margin-bottom: 0.2rem;
+}
+
+.contact-value {
+  font-size: 1.05rem;
+  color: var(--dusk);
+}
+
+.contact-value a {
+  color: var(--dusk);
+  transition: color 0.3s;
+}
+
+.contact-value a:hover { color: var(--sage-deep); }
+
+/* ─── Message Section ─── */
+.message-section {
+  margin-top: 3rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(232, 223, 208, 0.4);
+}
+
+.message-section p {
+  font-family: 'Satisfy', cursive;
+  font-size: 1.1rem;
+  color: var(--sage-deep);
+  text-align: center;
+}
+
+/* ─── Footer ─── */
+.contact-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--dusk);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+}
+
+.contact-footer a {
+  color: var(--lavender-light);
+  transition: opacity 0.3s;
+}
+
+.contact-footer a:hover { opacity: 0.7; }
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  .contact-card {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding: 2.5rem 2rem;
+  }
+
+  .founder-photo, .founder-photo-placeholder {
+    width: 220px;
+    height: 280px;
+  }
+
+  .contact-hero { padding: 8rem 1.5rem 3.5rem; }
+  .contact-content { padding: 3rem 1.5rem 4rem; }
+}
+
+@media (max-width: 480px) {
+  .contact-card { padding: 2rem 1.5rem; }
+  .founder-photo, .founder-photo-placeholder { width: 180px; height: 230px; }
+  .contact-details h2 { font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav class="nav">
+  <a href="/" class="nav-logo">MOONSTONE</a>
+  <a href="/" class="nav-back">Back to Home</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="contact-hero">
+  <span class="script">we'd love to hear from you</span>
+  <h1>Get in Touch</h1>
+  <p>Whether you have a question about our crystals, want to book a session, or just want to say hello — we're here for you.</p>
+</section>
+
+<!-- ─── CONTACT CONTENT ─── -->
+<section class="contact-content">
+  <div class="contact-card">
+
+    <!-- Founder Photo -->
+    <div class="founder-photo-section" id="founderPhotoSection">
+      <div class="founder-photo-placeholder">Z</div>
+      <h3 class="founder-name-below">Loading...</h3>
+      <p class="founder-title-below"></p>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="contact-details" id="contactDetails">
+      <h2>Let's Connect</h2>
+      <span class="script">healing starts with a conversation</span>
+      <p class="intro" id="contactIntro">Loading...</p>
+      <div id="contactItems"></div>
+      <div class="message-section" id="contactMessage"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer class="contact-footer">
+  <p>&copy; 2026 Moonstone. All rights reserved.</p>
+  <p style="margin-top:0.5rem;"><a href="/">Back to Home</a></p>
+</footer>
+
+<script type="module">
+import { db } from "/js/firebase-config.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
+
+function esc(str) {
+  if (!str) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+async function loadContact() {
+  try {
+    const snap = await getDoc(doc(db, "content", "contact"));
+    if (!snap.exists()) {
+      document.getElementById('contactIntro').textContent = 'Contact information coming soon.';
+      document.querySelector('.founder-name-below').textContent = '';
+      return;
+    }
+
+    const c = snap.data();
+
+    // Founder photo section
+    const photoSection = document.getElementById('founderPhotoSection');
+    if (c.founderPhoto) {
+      photoSection.querySelector('.founder-photo-placeholder').outerHTML =
+        `<div class="founder-photo"><img src="${esc(c.founderPhoto)}" alt="${esc(c.founderName)}" /></div>`;
+    } else {
+      photoSection.querySelector('.founder-photo-placeholder').textContent =
+        (c.founderName || 'Z').charAt(0).toUpperCase();
+    }
+    photoSection.querySelector('.founder-name-below').textContent = c.founderName || '';
+    photoSection.querySelector('.founder-title-below').textContent = c.founderTitle || '';
+
+    // Intro
+    document.getElementById('contactIntro').textContent = c.intro || '';
+
+    // Contact items
+    const items = document.getElementById('contactItems');
+    let html = '';
+
+    if (c.phone) {
+      html += `
+        <div class="contact-item">
+          <div class="contact-icon phone">📱</div>
+          <div class="contact-item-text">
+            <span class="contact-label">Phone</span>
+            <span class="contact-value"><a href="tel:${esc(c.phone)}">${esc(c.phone)}</a></span>
+          </div>
+        </div>`;
+    }
+
+    if (c.email) {
+      html += `
+        <div class="contact-item">
+          <div class="contact-icon email">✉</div>
+          <div class="contact-item-text">
+            <span class="contact-label">Email</span>
+            <span class="contact-value"><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></span>
+          </div>
+        </div>`;
+    }
+
+    if (c.location) {
+      html += `
+        <div class="contact-item">
+          <div class="contact-icon location">📍</div>
+          <div class="contact-item-text">
+            <span class="contact-label">Location</span>
+            <span class="contact-value">${esc(c.location)}</span>
+          </div>
+        </div>`;
+    }
+
+    items.innerHTML = html;
+
+    // Closing message
+    if (c.message) {
+      document.getElementById('contactMessage').innerHTML =
+        `<p>${esc(c.message)}</p>`;
+    }
+
+  } catch (err) {
+    console.error('Failed to load contact:', err);
+  }
+}
+
+loadContact();
+</script>
+
+</body>
+</html>

@@ -34,15 +34,15 @@ async function loadProducts() {
     }
 
     const products = [];
-    snap.forEach(doc => products.push(doc.data()));
+    snap.forEach(d => products.push({ id: d.id, ...d.data() }));
 
     const cardsHTML = products.map(p => `
-      <div class="crystal-card">
+      <a href="/product.html?id=${p.id}" class="crystal-card" style="text-decoration:none;color:inherit;">
         <img src="${esc(p.imageUrl)}" alt="${esc(p.name)}" class="crystal-bracelet-img" />
         <h4>${esc(p.name)}</h4>
-        <span class="crystal-property">${esc(p.description)}</span>
-        <span class="crystal-price">From £${p.price}</span>
-      </div>
+        <span class="crystal-property">${esc(p.tagline || '')}</span>
+        <span class="crystal-price">From CA$${p.price}</span>
+      </a>
     `).join('');
 
     // Duplicate for seamless infinite scroll
@@ -135,14 +135,26 @@ async function loadOurStory() {
     const snap = await getDoc(doc(db, "content", "main"));
     if (!snap.exists()) return;
 
-    const { ourStory } = snap.data();
-    if (!ourStory) return;
+    const { ourStory, ourStoryPhotos } = snap.data();
 
-    // Split on double newlines for multiple paragraphs, or render as single
-    const paragraphs = ourStory.split(/\n\s*\n/).filter(Boolean);
-    container.innerHTML = paragraphs
-      .map(p => `<p>${esc(p.trim())}</p>`)
-      .join('');
+    // Set story text
+    if (ourStory) {
+      const paragraphs = ourStory.split(/\n\s*\n/).filter(Boolean);
+      container.innerHTML = paragraphs
+        .map(p => `<p>${esc(p.trim())}</p>`)
+        .join('');
+    }
+
+    // Set story photos
+    if (ourStoryPhotos && ourStoryPhotos.length) {
+      const photoEls = document.querySelectorAll('.about-photo');
+      ourStoryPhotos.forEach((url, i) => {
+        if (url && photoEls[i]) {
+          photoEls[i].innerHTML = `<img src="${esc(url)}" alt="Our Story" />`;
+        }
+      });
+    }
+
   } catch (err) {
     console.error('Failed to load Our Story:', err);
   }
@@ -187,8 +199,29 @@ async function loadOfferings() {
   }
 }
 
+// ─── Load Footer Offerings ───
+async function loadFooterOfferings() {
+  const list = document.getElementById('footerOfferings');
+  if (!list) return;
+
+  try {
+    const snap = await getDoc(doc(db, "content", "main"));
+    if (!snap.exists()) return;
+
+    const { offerings } = snap.data();
+    if (!offerings || !offerings.length) return;
+
+    list.innerHTML = offerings.map((o, i) =>
+      `<li><a href="/offering.html?id=${i}">${esc(o.title)}</a></li>`
+    ).join('');
+  } catch (err) {
+    console.error('Failed to load footer offerings:', err);
+  }
+}
+
 // ─── Init ───
 loadProducts();
 loadEvents();
 loadOurStory();
 loadOfferings();
+loadFooterOfferings();

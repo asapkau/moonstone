@@ -445,51 +445,46 @@ nav .container {
 
 .about-visual {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
   min-height: 450px;
 }
 
-.about-circle {
-  width: 350px;
-  height: 350px;
-  border-radius: 50%;
-  background: linear-gradient(145deg, var(--moonlight), var(--lavender-light), var(--sand));
-  position: relative;
-  animation: breathe 6s ease-in-out infinite;
+.about-photo {
+  border-radius: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--moonlight), var(--lavender-light));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lavender);
+  font-size: 2rem;
+  min-height: 180px;
+  border: 1px solid rgba(232, 223, 208, 0.5);
+  transition: transform 0.5s ease;
 }
 
-.about-circle::before {
-  content: '☽';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 6rem;
-  color: var(--dusk);
-  opacity: 0.15;
+.about-photo:hover { transform: translateY(-4px); }
+
+.about-photo:nth-child(1) { border-radius: 20px 20px 6px 20px; }
+.about-photo:nth-child(2) { border-radius: 20px 20px 20px 6px; }
+.about-photo:nth-child(3) { border-radius: 6px 20px 20px 20px; grid-column: 1 / -1; max-height: 200px; }
+
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.about-circle::after {
-  content: '';
-  position: absolute;
-  inset: -30px;
-  border-radius: 50%;
-  border: 1px solid rgba(184, 169, 201, 0.2);
-  animation: gentleSpin 30s linear infinite;
-}
-
-.about-floating-text {
-  position: absolute;
+.about-photo-placeholder {
+  text-align: center;
   font-family: 'Satisfy', cursive;
-  color: var(--sage);
-  opacity: 0.4;
   font-size: 1rem;
+  color: var(--lavender);
+  opacity: 0.6;
 }
-
-.about-floating-text:nth-child(2) { top: 10%; right: 5%; animation: float 7s ease-in-out infinite; }
-.about-floating-text:nth-child(3) { bottom: 15%; left: 5%; animation: float 9s ease-in-out infinite 1s; }
 
 .about-content h2 {
   font-size: 3rem;
@@ -732,6 +727,8 @@ nav .container {
   color: var(--sage);
   font-size: 0.95rem;
   margin-bottom: 0.8rem;
+  display: block;
+  width: 100%;
 }
 
 .crystal-price {
@@ -1081,8 +1078,8 @@ footer {
   .nav-links.open { right: 0; }
 
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .about-visual { min-height: 300px; }
-  .about-circle { width: 250px; height: 250px; }
+  .about-visual { min-height: 250px; gap: 0.8rem; }
+  .about-photo { min-height: 140px; }
 
   .services-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
@@ -1712,9 +1709,9 @@ footer {
   <div class="container">
     <div class="about-grid reveal">
       <div class="about-visual">
-        <div class="about-circle"></div>
-        <span class="about-floating-text">harmony</span>
-        <span class="about-floating-text">peace</span>
+        <div class="about-photo"><span class="about-photo-placeholder">Photo 1</span></div>
+        <div class="about-photo"><span class="about-photo-placeholder">Photo 2</span></div>
+        <div class="about-photo"><span class="about-photo-placeholder">Photo 3</span></div>
       </div>
       <div class="about-content">
         <h2>Our Story</h2>
@@ -1857,17 +1854,14 @@ footer {
       </div>
       <div class="footer-col">
         <h4>Offerings</h4>
-        <ul>
-          <li><a href="#">Tarot Readings</a></li>
-          <li><a href="#">Healing Workshops</a></li>
-          <li><a href="#">Inclusive Circles</a></li>
-          <li><a href="#">Leadership Retreats</a></li>
+        <ul id="footerOfferings">
+          <li><a href="/offering.html">Our Offerings</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="#">Contact Us</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
           <li><a href="#">Gift Cards</a></li>
           <li><a href="#">FAQ</a></li>
           <li><a href="#">Privacy Policy</a></li>
